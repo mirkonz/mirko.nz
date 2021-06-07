@@ -1,7 +1,7 @@
 {
-  "name": "laurie.nz",
+  "name": "mirko.nz",
   "version": "2.0.1",
-  "description": "Lauren website",
+  "description": "Mirkos website",
   "author": "Mirko May <hi@mirko.nz> (https://mirko.nz)",
   "scripts": {
     "dev": "nuxt",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mayko780/laurie#readme"
+    "url": "https://github.com/mayko780/mirko#readme"
   },
   "license": "MIT",
   "dependencies": {

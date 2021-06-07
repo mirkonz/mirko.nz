@@ -1,15 +1,15 @@
-site_url: https://laurie.nz
-logo_url: https://laurie.nz/icon.png
+site_url: https://mirko.nz
+logo_url: https://mirko.nz/icon.png
 
 local_backend: true
 
 publish_mode: editorial_workflow
 backend:
   name: github
-  repo: mayko780/laurie
+  repo: mayko780/mirko
   branch: main
   squash_merges: true
-  # base_url: https://laurie.nz
+  # base_url: https://mirko.nz
   # auth_endpoint: api/auth
 
 media_folder: static/img

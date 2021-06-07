@@ -9,12 +9,12 @@ export default {
   target: 'static',
   components: true,
   generate: {
-    fallback: true
+    fallback: true,
   },
   // ? The env Property: https://nuxtjs.org/api/configuration-env/
   env: {
-    url: process.env.NODE_ENV === 'production' ? process.env.URL || 'https://laurie.nz' : 'http://localhost:3000',
-    lang: SITE_INFO.sitelang || 'en-NZ'
+    url: process.env.NODE_ENV === 'production' ? process.env.URL || 'https://mirko.nz' : 'http://localhost:3000',
+    lang: SITE_INFO.sitelang || 'en-NZ',
   },
   /*
    ** Headers of the page
@@ -27,34 +27,34 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: SITE_INFO.sitedescription || process.env.npm_package_description || ''
-      }
+        content: SITE_INFO.sitedescription || process.env.npm_package_description || '',
+      },
     ],
     link: [
       {
         rel: 'preconnect',
         href: 'https://fonts.gstatic.com',
-        crossorigin: true
+        crossorigin: true,
       },
       {
         rel: 'preload',
         as: 'style',
-        href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap'
+        href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap',
       },
       {
         rel: 'stylesheet',
         href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap',
         media: 'print',
-        onload: `this.media='all'`
-      }
+        onload: `this.media='all'`,
+      },
     ], // ? Imports the font 'Inter', can be optimized by the netlify plugin 'Subfont' by uncommenting it in `netlify.toml`
     noscript: [
       {
         innerHTML:
-          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">'
-      }
+          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">',
+      },
     ],
-    __dangerouslyDisableSanitizers: ['noscript']
+    __dangerouslyDisableSanitizers: ['noscript'],
   },
   /*
    ** Customize the progress-bar color
@@ -89,46 +89,46 @@ export default {
         'postcss-preset-env': postcssPresetEnv({
           stage: 1,
           features: {
-            'nesting-rules': false
-          }
+            'nesting-rules': false,
+          },
         }),
-        'postcss-easing-gradients': postcssEasingGradients
-      }
+        'postcss-easing-gradients': postcssEasingGradients,
+      },
     },
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
+    extend(config, ctx) {},
   },
   /*
    ** Custom additions configuration
    */
   // ? The content property: https://content.nuxtjs.org/configuration
   content: {
-    dir: 'content'
+    dir: 'content',
   },
   tailwindcss: {
     cssPath: '~/assets/css/main.css',
-    exposeConfig: false // enables `import { theme } from '~tailwind.config'`
+    exposeConfig: false, // enables `import { theme } from '~tailwind.config'`
   },
   purgeCSS: {
     mode: 'postcss',
     // ? Whitelisting docs: https://v1.purgecss.com/whitelisting
     whitelist: ['dark-mode', 'light-mode', 'btn', 'icon', 'main'],
     whitelistPatterns: [/^card/, /^nuxt-content/, /image$/, /title$/],
-    whitelistPatternsChildren: [/^nuxt-content/, /code/, /pre/, /token/, /^vue-content-placeholders/]
+    whitelistPatternsChildren: [/^nuxt-content/, /code/, /pre/, /token/, /^vue-content-placeholders/],
   },
   pwa: {
     icon: {
       source: 'static/icon.png',
-      filename: 'icon.png'
+      filename: 'icon.png',
     },
     manifest: { name: SITE_INFO.sitename || process.env.npm_package_name || '', lang: process.env.lang },
     meta: {
       name: SITE_INFO.sitename || process.env.npm_package_name || '',
       lang: process.env.lang,
       ogHost: process.env.URL,
-      ogImage: '/preview.jpg'
-    }
-  }
+      ogImage: '/preview.jpg',
+    },
+  },
 }
