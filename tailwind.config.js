@@ -11,9 +11,17 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', ...defaultTheme.fontFamily.sans]
-      }
-    }
+        sans: ['Raleway', ...defaultTheme.fontFamily.sans],
+      },
+    },
+    colors: {
+      black: '#222',
+      white: '#ddd',
+      green: '#a2ff00',
+    },
+    container: {
+      center: true,
+    },
   },
   purge: {
     // Learn more on https://tailwindcss.com/docs/controlling-file-size/#removing-unused-css
@@ -21,6 +29,6 @@ module.exports = {
     content: ['components/**/*.vue', 'layouts/**/*.vue', 'pages/**/*.vue', 'plugins/**/*.js', 'nuxt.config.js'],
     options: {
       // Set whitelist in nuxt.config.js -> purgeCSS.whitelist: ['dark-mode', 'light-mode', 'btn', 'icon']
-    }
-  }
+    },
+  },
 }

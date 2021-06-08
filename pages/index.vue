@@ -1,7 +1,8 @@
 <template>
-  <main>
+  <main class="justify-center align-middle">
     <section v-if="data">
       <h1>{{ data[0].title }}</h1>
+      <p>{{ data[0].body }}</p>
       <img v-if="data[0].cover" :src="data[0].cover" />
       <nuxt-content :document="data[0]" />
     </section>

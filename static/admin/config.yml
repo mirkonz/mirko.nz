@@ -3,7 +3,7 @@ logo_url: https://mirko.nz/icon.png
 
 local_backend: true
 
-publish_mode: editorial_workflow
+# publish_mode: editorial_workflow
 backend:
   name: github
   repo: mayko780/mirko

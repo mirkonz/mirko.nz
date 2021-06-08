@@ -39,19 +39,19 @@ export default {
       {
         rel: 'preload',
         as: 'style',
-        href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap',
+        href: 'https://fonts.googleapis.com/css2?family=Raleway:wght@300;600;700&display=swap',
       },
       {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap',
+        href: 'https://fonts.googleapis.com/css2?family=Raleway:wght@300;600;700&display=swap',
         media: 'print',
         onload: `this.media='all'`,
       },
-    ], // ? Imports the font 'Inter', can be optimized by the netlify plugin 'Subfont' by uncommenting it in `netlify.toml`
+    ],
     noscript: [
       {
         innerHTML:
-          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">',
+          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;600;700&display=swap">',
       },
     ],
     __dangerouslyDisableSanitizers: ['noscript'],
@@ -59,7 +59,7 @@ export default {
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: '#526488' },
+  loading: { color: '#a2ff00' },
   /*
    ** Global CSS
    */
