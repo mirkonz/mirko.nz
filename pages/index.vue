@@ -1,18 +1,29 @@
 <template>
   <main class="justify-center align-middle">
     <section v-if="data">
-      <h1>{{ data[0].title }}</h1>
-      <p>{{ data[0].body }}</p>
-      <img v-if="data[0].cover" :src="data[0].cover" />
-      <nuxt-content :document="data[0]" />
+      <h1 v-html="data.title" class="text-4xl mb-4"></h1>
+      <nuxt-content :document="data" class="markdown mb-4" />
+      <img v-if="data.cover" :src="data.cover" />
     </section>
 
-    <section>
+    <!-- <section>
       <h3>Latest blog post</h3>
       <posts post-type="blog" :amount="1" />
-    </section>
+    </section> -->
   </main>
 </template>
+
+<style>
+.markdown h2 {
+  @apply text-3xl;
+}
+.markdown p {
+  @apply mt-2;
+}
+.markdown a {
+  @apply text-green;
+}
+</style>
 
 <script>
 export default {

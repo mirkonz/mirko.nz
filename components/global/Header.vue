@@ -1,6 +1,6 @@
 <template>
   <nav aria-label="Main Menu" class="flex pt-10">
-    <ul class="flex flex-row gap-8 text-lg">
+    <ul class="flex flex-row gap-8 text-lg uppercase">
       <li>
         <nuxt-link to="/" class="" active-class="text-green" exact>Home</nuxt-link>
       </li>

@@ -16,7 +16,8 @@
   "license": "MIT",
   "dependencies": {
     "@nuxt/content": "^1.14.0",
-    "nuxt": "^2.15.6"
+    "nuxt": "^2.15.6",
+    "particles.js": "^2.0.0"
   },
   "devDependencies": {
     "@nuxtjs/pwa": "^3.3.5",

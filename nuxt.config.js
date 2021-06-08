@@ -89,7 +89,7 @@ export default {
         'postcss-preset-env': postcssPresetEnv({
           stage: 1,
           features: {
-            'nesting-rules': false,
+            'nesting-rules': true,
           },
         }),
         'postcss-easing-gradients': postcssEasingGradients,

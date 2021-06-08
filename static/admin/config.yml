@@ -47,8 +47,8 @@ collections:
     files:
       - label: 'Home'
         name: 'home'
-        file: 'content/home/data.json'
-        format: 'json'
+        file: 'content/home.md'
+        format: 'frontmatter'
         editor:
           preview: true
         fields:
