@@ -1,7 +1,7 @@
 ---
 category: home
 title: <span class="text-green">Mirko</span> May
-cover: /img/thelionking_3400x400.png
+cover: ''
 ---
 
 ## Kia Ora & welcome to my website **mirkomay.com**
