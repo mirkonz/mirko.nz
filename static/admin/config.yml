@@ -17,30 +17,7 @@ public_folder: /img
 
 # Docs: https://www.netlifycms.org/docs/configuration-options/#collections
 collections:
-  - label: 'Site settings'
-    name: 'site'
-    files:
-      - label: 'Info'
-        name: 'info'
-        file: 'content/site/info.json'
-        format: 'json'
-        editor:
-          preview: false
-        fields:
-          - { label: Site Name, name: sitename, widget: string, hint: 'This is used for the site title' }
-          - {
-              label: Site Description,
-              name: sitedescription,
-              widget: string,
-              hint: 'This is used as descriptive text for links that link to this site',
-            }
-          - {
-              label: Site Language,
-              name: sitelang,
-              widget: string,
-              pattern: ['^[a-z]{2}([-])?([A-Za-z]{2})?$', 'Must match "xx" or "xx-XX" syntax (ex. "en" or "sv-SE")'],
-            }
-          # - { label: Site Email, name: siteemail, widget: string, required: false }
+
 
   - label: 'Welcome'
     name: 'home'
@@ -49,8 +26,8 @@ collections:
         name: 'home'
         file: 'content/home.md'
         format: 'frontmatter'
-        editor:
-          preview: true
+        # editor:
+          # preview: true
         fields:
           - { label: 'Title', name: 'title', widget: 'string', required: true }
           - { label: 'Content', name: 'body', widget: 'markdown', required: false }
@@ -97,3 +74,28 @@ collections:
           summary: '{{fields.image}}',
           field: { label: 'Image', name: 'image', widget: 'image' },
         }
+
+  - label: 'Site settings'
+    name: 'site'
+    files:
+      - label: 'Info'
+        name: 'info'
+        file: 'content/site/info.json'
+        format: 'json'
+        editor:
+          preview: false
+        fields:
+          - { label: Site Name, name: sitename, widget: string, hint: 'This is used for the site title' }
+          - {
+              label: Site Description,
+              name: sitedescription,
+              widget: string,
+              hint: 'This is used as descriptive text for links that link to this site',
+            }
+          - {
+              label: Site Language,
+              name: sitelang,
+              widget: string,
+              pattern: ['^[a-z]{2}([-])?([A-Za-z]{2})?$', 'Must match "xx" or "xx-XX" syntax (ex. "en" or "sv-SE")'],
+            }
+          # - { label: Site Email, name: siteemail, widget: string, required: false }

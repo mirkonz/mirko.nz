@@ -13,6 +13,55 @@ module.exports = {
       fontFamily: {
         sans: ['Raleway', ...defaultTheme.fontFamily.sans],
       },
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            color: theme('colors.white'),
+            a: {
+              color: theme('colors.green'),
+            },
+            strong: {
+              color: theme('colors.white'),
+            },
+            h1: {
+              color: theme('colors.white'),
+              fontWeight: 'normal',
+            },
+            h2: {
+              color: theme('colors.white'),
+              fontWeight: 'normal',
+              fontSize: theme('fontsize.text-4xl'),
+            },
+            h3: {
+              color: theme('colors.white'),
+            },
+            h4: {
+              color: theme('colors.white'),
+            },
+            'figure figcaption': {
+              color: theme('colors.gray.400'),
+            },
+            code: {
+              color: theme('colors.white'),
+              textShadow: 'none',
+            },
+            'a code': {
+              color: theme('colors.white'),
+            },
+            pre: {
+              color: theme('colors.gray.200'),
+              backgroundColor: theme('colors.gray.800'),
+            },
+            thead: {
+              color: theme('colors.white'),
+              borderBottomColor: theme('colors.gray.400'),
+            },
+            'tbody tr': {
+              borderBottomColor: theme('colors.gray.600'),
+            },
+          },
+        },
+      }),
     },
     colors: {
       black: '#222',
@@ -31,4 +80,5 @@ module.exports = {
       // Set whitelist in nuxt.config.js -> purgeCSS.whitelist: ['dark-mode', 'light-mode', 'btn', 'icon']
     },
   },
+  plugins: [require('@tailwindcss/typography')],
 }

@@ -1,8 +1,8 @@
 <template>
   <main>
-    <section v-if="posts">
-      <h1>Projects</h1>
-      <posts post-type="projects" :amount="10" />
+    <section v-if="posts" class="max-w-[65ch]">
+      <h2 class="text-4xl mb-4">Projects</h2>
+      <posts post-type="projects" :amount="10" class="" />
     </section>
   </main>
 </template>

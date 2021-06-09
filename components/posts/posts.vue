@@ -1,24 +1,24 @@
 <template>
-  <ul v-if="posts.length > 0">
+  <ul v-if="posts.length > 0" class="flex flex-col gap-6">
     <li v-for="(post, index) in posts" :key="index">
       <nuxt-link :to="`${postType}/${post.slug}`">
         <template v-if="postType === 'projects'">
-          <span>
-            <h6>{{ post.category }}</h6>
-            <h3>{{ post.title }}</h3>
-            <p>{{ post.description }}</p>
-          </span>
+          <div class="flex">
+            <h3 class="font-bold flex-grow">{{ post.title }}</h3>
+            <p class="text-xs text-green uppercase">{{ post.category }}</p>
+          </div>
+          <p>{{ post.description }}</p>
           <img v-if="post.cover" :src="post.cover" />
         </template>
 
         <template v-else>
-          <span>
-            <span>
-              <h3>{{ post.title }}</h3>
-              <h6 v-if="post.createdAt">{{ formatDate(post.createdAt) }}</h6>
-            </span>
-            <p>{{ post.description }}</p>
-          </span>
+          <!-- <div> -->
+          <div class="flex">
+            <h3 class="font-bold flex-grow">{{ post.title }}</h3>
+            <p v-if="post.createdAt" class="text-xs text-green">{{ formatDate(post.createdAt) }}</p>
+          </div>
+          <p>{{ post.description }}</p>
+          <!-- </div> -->
         </template>
       </nuxt-link>
     </li>

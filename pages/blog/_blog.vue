@@ -1,16 +1,16 @@
 <template>
   <main>
     <section v-if="post">
-      <nav aria-label="go back">
-        <router-back />
-      </nav>
-
-      <article>
-        <h5 v-if="post.createdAt">{{ formatDate(post.createdAt) }}</h5>
-        <h1>{{ post.title }}</h1>
+      <article class="prose prose-lg md:prose-xl">
+        <h2>{{ post.title }}</h2>
+        <p v-if="post.createdAt" class="text-green uppercase">{{ formatDate(post.createdAt) }}</p>
         <p>{{ post.description }}</p>
         <nuxt-content :document="post" />
       </article>
+
+      <nav aria-label="go back">
+        <router-back to="/blog" />
+      </nav>
     </section>
   </main>
 </template>
