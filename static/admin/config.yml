@@ -1,7 +1,6 @@
 site_url: https://mirko.nz
 logo_url: https://mirko.nz/icon.png
 
-local_backend: true
 
 # publish_mode: editorial_workflow
 backend:
@@ -11,6 +10,8 @@ backend:
   squash_merges: true
   # base_url: https://mirko.nz
   # auth_endpoint: api/auth
+
+local_backend: true
 
 media_folder: static/img
 public_folder: /img
@@ -31,7 +32,6 @@ collections:
         fields:
           - { label: 'Title', name: 'title', widget: 'string', required: true }
           - { label: 'Content', name: 'body', widget: 'markdown', required: false }
-          - { label: 'Cover Image', name: 'cover', widget: 'image', required: false, allow_multiple: false }
 
   - name: 'blog'
     label: 'Blog'

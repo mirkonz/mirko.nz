@@ -4,18 +4,22 @@
       <nuxt-link :to="`${postType}/${post.slug}`">
         <template v-if="postType === 'projects'">
           <div class="flex">
-            <h3 class="font-bold flex-grow">{{ post.title }}</h3>
-            <p class="text-xs text-green uppercase">{{ post.category }}</p>
+            <img v-if="post.cover" :src="post.cover" class="mr-6" />
+            <div class="flex-grow">
+              <div class="flex">
+                <h3 class="font-bold flex-grow">{{ post.title }}</h3>
+                <p class="text-xs text-green uppercase">{{ post.category }}</p>
+              </div>
+              <p>{{ post.description }}</p>
+            </div>
           </div>
-          <p>{{ post.description }}</p>
-          <img v-if="post.cover" :src="post.cover" />
         </template>
 
         <template v-else>
           <!-- <div> -->
           <div class="flex">
             <h3 class="font-bold flex-grow">{{ post.title }}</h3>
-            <p v-if="post.createdAt" class="text-xs text-green">{{ formatDate(post.createdAt) }}</p>
+            <time v-if="post.createdAt" class="text-xs text-green">{{ formatDate(post.createdAt) }}</time>
           </div>
           <p>{{ post.description }}</p>
           <!-- </div> -->
@@ -23,13 +27,13 @@
       </nuxt-link>
     </li>
   </ul>
-  <div v-else-if="loading">
+  <!-- <div v-else-if="loading">
     <div v-for="placeholder in placeholderClasses" :key="placeholder.id">
       <content-placeholders :rounded="true" :class="placeholder">
         <content-placeholders-heading />
       </content-placeholders>
     </div>
-  </div>
+  </div> -->
   <p v-else>
     {{ amount > 1 ? 'Posts not found' : 'Post not found' }}
   </p>

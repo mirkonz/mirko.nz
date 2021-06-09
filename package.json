@@ -16,9 +16,11 @@
   "license": "MIT",
   "dependencies": {
     "@nuxt/content": "^1.14.0",
+    "@tailwindcss/aspect-ratio": "^0.2.1",
     "@tailwindcss/typography": "^0.4.1",
     "nuxt": "^2.15.6",
-    "particles.js": "^2.0.0"
+    "particles.js": "^2.0.0",
+    "three": "^0.129.0"
   },
   "devDependencies": {
     "@nuxtjs/pwa": "^3.3.5",

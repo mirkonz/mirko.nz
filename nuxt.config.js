@@ -4,6 +4,7 @@ import postcssNesting from 'postcss-nesting'
 import postcssPresetEnv from 'postcss-preset-env'
 import postcssEasingGradients from 'postcss-easing-gradients'
 import * as SITE_INFO from './content/site/info.json'
+import fs from 'fs'
 
 export default {
   target: 'static',
@@ -56,6 +57,13 @@ export default {
     ],
     __dangerouslyDisableSanitizers: ['noscript'],
   },
+  /*   server: {
+    https: {
+      key: fs.readFileSync(path.resolve(__dirname, 'server.key')),
+      cert: fs.readFileSync(path.resolve(__dirname, 'server.crt')),
+    },
+  }, */
+
   /*
    ** Customize the progress-bar color
    */

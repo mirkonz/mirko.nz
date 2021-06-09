@@ -3,13 +3,12 @@
     <section v-if="data">
       <h1 v-html="data.title" class="text-4xl mb-4"></h1>
       <nuxt-content :document="data" class="markdown mb-4" />
-      <img v-if="data.cover" :src="data.cover" />
     </section>
 
-    <!-- <section>
-      <h3>Latest blog post</h3>
-      <posts post-type="blog" :amount="1" />
-    </section> -->
+    <section class="mt-16 w-96">
+      <h3 class="text-2xl text-green">Latest blog post</h3>
+      <posts post-type="blog" :amount="1" class="posts" />
+    </section>
   </main>
 </template>
 
@@ -31,9 +30,8 @@ export default {
     let data
     try {
       data = await $content('home').fetch()
-      console.log(data)
     } catch (e) {
-      error({ message: 'Blog posts not found' })
+      error({ message: 'Home content not found' })
     }
     return { data }
   },
