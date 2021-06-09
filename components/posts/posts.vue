@@ -4,7 +4,7 @@
       <nuxt-link :to="`${postType}/${post.slug}`">
         <template v-if="postType === 'projects'">
           <div class="flex">
-            <img v-if="post.cover" :src="post.cover" class="mr-6" />
+            <img v-if="post.cover" :src="post.cover" :alt="post.title" class="mr-6" />
             <div class="flex-grow">
               <div class="flex">
                 <h3 class="font-bold flex-grow">{{ post.title }}</h3>
@@ -16,13 +16,11 @@
         </template>
 
         <template v-else>
-          <!-- <div> -->
           <div class="flex">
             <h3 class="font-bold flex-grow">{{ post.title }}</h3>
             <time v-if="post.createdAt" class="text-xs text-green">{{ formatDate(post.createdAt) }}</time>
           </div>
           <p>{{ post.description }}</p>
-          <!-- </div> -->
         </template>
       </nuxt-link>
     </li>
