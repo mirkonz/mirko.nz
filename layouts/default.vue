@@ -8,7 +8,6 @@
 </template>
 
 <script>
-//
 export default {
   head() {
     return {
@@ -20,7 +19,7 @@ export default {
   mounted() {
     require('particles.js')
     if (particlesJS) {
-      // particlesJS.load('particles', '/particles.json')
+      particlesJS.load('particles', '/particles.json')
     }
   },
 }
