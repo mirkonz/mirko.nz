@@ -3,7 +3,9 @@ title: Home automation
 description: The beautiful art of barcodes
 ---
 
-I was working on my home automation system and wanted to ...
+I was working on my home automation system and and this happened...
+
+More info to come...
 
 ![The Lion King](/img/thelionking_3400x400.png 'The Lion King')
 

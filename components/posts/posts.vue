@@ -2,26 +2,17 @@
   <ul v-if="posts.length > 0" class="flex flex-col gap-6">
     <li v-for="(post, index) in posts" :key="index">
       <nuxt-link :to="`${postType}/${post.slug}`">
-        <template v-if="postType === 'projects'">
-          <div class="flex">
-            <img v-if="post.cover" :src="post.cover" :alt="post.title" class="mr-6" />
-            <div class="flex-grow">
-              <div class="flex">
-                <h3 class="font-bold flex-grow">{{ post.title }}</h3>
-                <p class="text-xs text-green uppercase">{{ post.category }}</p>
-              </div>
-              <p>{{ post.description }}</p>
+        <div class="flex items-center">
+          <img v-if="post.cover" :src="post.cover" :alt="post.title" class="mr-6 object-cover rounded-full h-32 w-32" />
+          <div class="flex-grow">
+            <div class="flex">
+              <h3 class="text-xl flex-grow">{{ post.title }}</h3>
+              <time v-if="post.createdAt" class="text-xs text-green">{{ formatDate(post.createdAt) }}</time>
             </div>
+            <p v-if="post.category" class="text-sm text-white text-opacity-70 uppercase">{{ post.category }}</p>
+            <p>{{ post.description }}</p>
           </div>
-        </template>
-
-        <template v-else>
-          <div class="flex">
-            <h3 class="font-bold flex-grow">{{ post.title }}</h3>
-            <time v-if="post.createdAt" class="text-xs text-green">{{ formatDate(post.createdAt) }}</time>
-          </div>
-          <p>{{ post.description }}</p>
-        </template>
+        </div>
       </nuxt-link>
     </li>
   </ul>
@@ -32,8 +23,9 @@
       </content-placeholders>
     </div>
   </div> -->
-  <p v-else>
-    {{ amount > 1 ? 'Posts not found' : 'Post not found' }}
+  <p v-else class="py-12 text-2xl">
+    <span class="text-green">Work in progress...</span><br />
+    Please come back later!
   </p>
 </template>
 
