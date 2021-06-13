@@ -5,7 +5,7 @@ logo_url: https://mirko.nz/icon.png
 # publish_mode: editorial_workflow
 backend:
   name: github
-  repo: mayko780/mirko
+  repo: mirkonz/mirkonz
   branch: main
   squash_merges: true
   # base_url: https://mirko.nz
