@@ -1,6 +1,6 @@
 import path from 'path'
 import postcssImport from 'postcss-import'
-import postcssNesting from 'postcss-nesting'
+// import postcssNesting from 'postcss-nesting'
 import postcssPresetEnv from 'postcss-preset-env'
 import postcssEasingGradients from 'postcss-easing-gradients'
 import * as SITE_INFO from './content/site/info.json'
@@ -16,6 +16,13 @@ export default {
   env: {
     url: process.env.NODE_ENV === 'production' ? process.env.URL || 'https://mirko.nz' : 'http://localhost:3000',
     lang: SITE_INFO.sitelang || 'en-NZ',
+  },
+  app: {
+    head: {
+      bodyAttrs: {
+        class: 'overflow-hidden',
+      },
+    },
   },
   /*
    ** Headers of the page
@@ -86,7 +93,7 @@ export default {
       plugins: {
         'postcss-import': postcssImport,
         tailwindcss: path.resolve(__dirname, './tailwind.config.js'),
-        'postcss-nesting': postcssNesting,
+        // 'postcss-nesting': postcssNesting,
         'postcss-preset-env': postcssPresetEnv({
           stage: 1,
           features: {

@@ -5,10 +5,10 @@
       <nuxt-content :document="data" class="markdown mb-4" />
     </section>
 
-    <section class="mt-16 w-96">
+    <!-- <section class="mt-16 w-96">
       <h3 class="text-2xl text-green">Latest blog post</h3>
       <posts post-type="blog" :amount="1" class="posts" />
-    </section>
+    </section> -->
   </main>
 </template>
 

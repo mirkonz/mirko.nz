@@ -4,8 +4,9 @@ title: <span class="text-green">Mirko</span> May
 cover: ''
 ---
 
-## Kia Ora & welcome to my website **mirkomay.com**
+## Kia Ora & welcome to my website **mirko.nz**
 
-## I’m a Web Developer living in Wellington, New Zealand!
+## I’m a Lead Design Engineer living in Wellington, New Zealand!
 
-Have a look at [my work](/projects) and if you like what you see, get in touch.
+<!-- Have a look at [my work](/projects) and if you like what you see, get in touch. -->
+Warning: This website may contain traces of humor, but mostly just empty promises.

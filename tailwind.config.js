@@ -67,6 +67,7 @@ module.exports = {
       black: '#222',
       white: '#ddd',
       green: '#a2ff00',
+      current: 'currentColor',
     },
     container: {
       center: true,
