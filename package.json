@@ -18,7 +18,7 @@
     "@nuxt/content": "^1.15.1",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/typography": "^0.5.13",
-    "nuxt": "^2.15.6",
+    "nuxt": "^2.18.0",
     "particles.js": "^2.0.0",
     "three": "^0.164.1"
   },
