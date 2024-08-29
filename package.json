@@ -17,7 +17,7 @@
   "dependencies": {
     "@nuxt/content": "^1.15.1",
     "@tailwindcss/aspect-ratio": "^0.4.2",
-    "@tailwindcss/typography": "^0.5.13",
+    "@tailwindcss/typography": "^0.5.14",
     "nuxt": "^2.15.6",
     "particles.js": "^2.0.0",
     "three": "^0.164.1"
