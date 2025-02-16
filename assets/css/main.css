@@ -1,3 +1,24 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+@layer base {
+  .markdown {
+    @apply space-y-4; /* Adds spacing between block elements */
+
+    h1 { @apply mb-8 text-4xl font-bold; }
+    h2 { @apply mb-6 text-3xl font-semibold; }
+    h3 { @apply mb-4 text-2xl font-medium; }
+    p { @apply mb-2 text-base; }
+
+    /* Lists */
+    ul { @apply mb-4 pl-5 list-disc; }
+    ul li { @apply mb-1 marker:text-green; }
+
+    /* Ensure proper spacing when elements follow each other */
+    h1 + h2, h2 + h3, h3 + p, p + ul, ul + p, ul + ul { @apply mt-4; }
+
+    /* Avoid extra spacing at the bottom of a section */
+    h1:last-child, h2:last-child, h3:last-child, p:last-child, ul:last-child { @apply mb-0; }
+  }
+}
