@@ -4,7 +4,7 @@
 
 @layer base {
   .markdown {
-    @apply space-y-4 max-width[65ch];
+    @apply space-y-4;
 
     h1 { @apply mb-8 text-4xl font-bold; }
     h2 { @apply mb-6 text-3xl font-semibold; }
