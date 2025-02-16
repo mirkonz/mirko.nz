@@ -12,6 +12,8 @@
     h3 { @apply mb-4 text-xl font-medium; }
     p { @apply mb-2 text-base; }
 
+    strong { @apply text-green; }
+
     /* Lists */
     ul { @apply mb-4 pl-5 list-disc; }
     ul li { @apply mb-1 marker:text-green; }

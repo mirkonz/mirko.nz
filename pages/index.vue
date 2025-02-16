@@ -12,24 +12,6 @@
   </main>
 </template>
 
-<style>
-
-
-/* .markdown h2 {
-  @apply text-3xl;
-}
-.markdown p {
-  @apply mt-2;
-}
-.markdown a {
-  @apply text-green;
-}
-.markdown li {
-  @apply list-disc ml-4;
-} */
-
-</style>
-
 <script>
 export default {
   async asyncData({ $content, error }) {
