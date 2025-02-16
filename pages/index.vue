@@ -22,6 +22,10 @@
 .markdown a {
   @apply text-green;
 }
+.markdown li {
+  @apply list-disc ml-4 text-green;
+}
+
 </style>
 
 <script>
