@@ -4,10 +4,9 @@ title: <span class="text-green">Mirko</span> May
 cover: ''
 ---
 
-## Kia Ora & welcome to my website **mirko.nz**
+### Kia Ora & welcome to my website **mirko.nz**
 
-### I’m a UI Engineer living in Wellington, New Zealand, working at the intersection of design, engineering, and systems thinking. My focus is on building scalable, intuitive, and resilient design systems that empower teams and enhance digital experiences.
-
+#### I’m a UI Engineer living in Wellington, New Zealand, working at the intersection of design, engineering, and systems thinking. My focus is on building scalable, intuitive, and resilient design systems that empower teams and enhance digital experiences.
 
 * Precision in design.
 * Systems-driven thinking.
