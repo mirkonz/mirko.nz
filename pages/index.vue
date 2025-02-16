@@ -2,7 +2,7 @@
   <main class="justify-center align-middle">
     <section v-if="data">
       <h1 v-html="data.title" class="text-4xl mb-4"></h1>
-      <nuxt-content :document="data" class="markdown mb-4 max-width-[65ch]" />
+      <nuxt-content :document="data" class="markdown mb-4 max-w-prose" />
     </section>
 
     <!-- <section class="mt-16 w-96">
