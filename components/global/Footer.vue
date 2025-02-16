@@ -1,5 +1,5 @@
 <template>
-  <footer class="pb-10 flex items-center flex-col md:flex-row-reverse gap-2 md:gap-4">
+  <footer class="pb-10 flex items-center flex-col-reverse md:flex-row gap-4 md:gap-2">
     <div class="flex-grow text-white text-opacity-50">&copy; Mirko May 1999-{{ currentYear }}</div>
     <div class="flex gap-4">
       <a href="http://www.facebook.com/mirko.may" target="_blank" class="text-white transition hover:text-green">
