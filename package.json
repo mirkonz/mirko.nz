@@ -20,7 +20,7 @@
     "@tailwindcss/typography": "^0.5.13",
     "nuxt": "^2.15.6",
     "particles.js": "^2.0.0",
-    "three": "^0.172.0"
+    "three": "^0.176.0"
   },
   "devDependencies": {
     "@nuxtjs/pwa": "^3.3.5",
