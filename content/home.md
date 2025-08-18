@@ -6,10 +6,9 @@ cover: ''
 
 ### Kia Ora & welcome to **mirko.nz**
 
-#### I’m a UI Engineer living in Wellington, New Zealand, working at the intersection of design, engineering, and systems thinking. My focus is on building scalable, intuitive, and resilient design systems that empower teams and enhance digital experiences.
+#### I’m a UI Engineer based in Wellington, New Zealand, specialising in building scalable and resilient design systems. My work combines design, engineering and systems thinking to create solutions that improve consistency, usability and efficiency across digital products.
 
-* Precision in design.
-* Systems-driven thinking.
-* Engineering for the future.
 
-I believe that great design is not just about aesthetics, but about clarity, efficiency, and intent. It’s about reducing friction, enabling creativity, and ensuring that technology serves people—not the other way around.
+I focus on user experience, accessibility and SEO-friendly front-end practices, ensuring that interfaces are not only intuitive but also discoverable and inclusive. My expertise includes developing design patterns, maintaining clear documentation and enabling collaboration between design and engineering teams.
+
+I believe design is about clarity and intent as much as aesthetics. My goal is to reduce friction, support creativity and ensure technology remains accessible, user-centred and effective at scale.
