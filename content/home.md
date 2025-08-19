@@ -4,7 +4,7 @@ title: <span class="text-green">Mirko</span> May
 cover: ''
 ---
 
-### Kia Ora & moin moin to **mirko.nz**
+### Kia Ora & Moin moin to **mirko.nz**
 
 #### I’m a UI Engineer based in Wellington, New Zealand, specialising in building scalable and resilient design systems. My work combines design, engineering and systems thinking to create solutions that improve consistency, usability and efficiency across digital products.
 
