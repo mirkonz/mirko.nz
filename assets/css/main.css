@@ -1,6 +1,13 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+@theme {
+  --color-black: #222;
+  --color-white: #ddd;
+  --color-green: #a2ff00;
+  --font-sans: 'Raleway', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
 
 @layer base {
   .markdown {
@@ -26,7 +33,6 @@
       @apply text-green;
     }
 
-    /* Lists */
     ul {
       @apply mb-4 pl-5 list-disc;
     }
@@ -34,7 +40,6 @@
       @apply mb-1 marker:text-green;
     }
 
-    /* Ensure proper spacing when elements follow each other */
     h1 + h2,
     h2 + h3,
     h3 + h4,
@@ -46,7 +51,6 @@
       @apply mt-4;
     }
 
-    /* Avoid extra spacing at the bottom of a section */
     h1:last-child,
     h2:last-child,
     h3:last-child,
@@ -110,13 +114,37 @@
 
 .liquid-glass::before {
   backdrop-filter: blur(3px);
-  filter: url(#glass-distortion);
   z-index: -1;
 }
+
 .liquid-glass::after {
   box-shadow: inset 1px 1px 1px 0 rgb(255 255 255 / 10%), inset -1px -1px 1px 1px rgb(255 255 255 / 10%);
 }
 
 .liquid-glass.dragging {
   cursor: grabbing;
+}
+
+.page {
+  min-height: 85vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-indicator,
+.connect {
+  position: fixed;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.connect.is-active,
+.scroll-indicator.is-active {
+  visibility: visible;
+  pointer-events: auto;
 }

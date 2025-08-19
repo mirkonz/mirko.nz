@@ -9,6 +9,5 @@
 - Nuxt.js (Vue)
 - Tailwind
 - PostCSS
-- PurgeCSS
 - Netlify CMS
 - Prettier
