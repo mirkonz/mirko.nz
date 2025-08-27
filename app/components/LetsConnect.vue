@@ -1,12 +1,5 @@
 <script setup lang="ts">
-import { useNuxtApp } from 'nuxt/app'
 import { computed, ref, nextTick, onMounted, onUnmounted } from 'vue'
-
-const { $posthog } = useNuxtApp()
-let posthog
-if ($posthog) {
-  posthog = $posthog()
-}
 
 type Item = { id: string | number; label?: string; icon?: string; url?: string }
 
@@ -101,7 +94,7 @@ const tween = async (toOpen: boolean) => {
       })
       if (toOpen) {
         const first = itemEls.value[0]?.querySelector<HTMLElement>('a,button,[tabindex]')
-        first?.focus({ preventScroll: true })
+        // first?.focus({ preventScroll: true })
       }
     }
   }
@@ -111,7 +104,6 @@ const tween = async (toOpen: boolean) => {
 
 const toggle = () => {
   tween(!open.value)
-  posthog.capture('lets_connect_clicked', { open: !open.value })
 }
 
 onMounted(() => {
@@ -140,7 +132,7 @@ onUnmounted(() => {
         class="relative z-[2] cursor-pointer select-none"
       >
         <slot name="button">
-          <button class="px-6 py-4 rounded-full bg-green text-black font-extrabold">Let’s Connect</button>
+          <button class="px-6 py-4 rounded-full bg-primary text-black font-extrabold">Let’s Connect</button>
         </slot>
       </div>
 
@@ -161,7 +153,7 @@ onUnmounted(() => {
             <slot name="item" :item="it">
               <a
                 :href="(it as any).url"
-                class="px-2 py-1 rounded-full border text-sm bg-green text-black w-16 h-16 flex justify-center items-center"
+                class="px-2 py-1 rounded-full border text-sm bg-primary text-black w-16 h-16 flex justify-center items-center"
                 target="_blank"
                 rel="noreferrer noopener"
               >

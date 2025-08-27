@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 500 500">
+  <rect width="512" height="512" style="stroke: rgb(0, 0, 0); fill: rgb(34, 34, 34); visibility: hidden;"/>
+  <path d="M 131 252.5 L 185 252.5 L 185 104.5 L 225 252.5 L 275 252.5 L 315 104.5 L 315 252.5 L 369 252.5 L 369 47.5 L 282 47.5 L 250 168.5 L 218 47.5 L 131 47.5 L 131 252.5 Z" style="stroke-width: 0px; fill: rgb(162, 255, 0);">
+    <title>M1</title>
+  </path>
+  <path d="M 131 252.5 L 185 252.5 L 185 397.5 L 225 252.5 L 275 252.5 L 315 397.5 L 315 252.5 L 369 252.5 L 369 452.5 L 282 452.5 L 250 334.5 L 218 452.5 L 131 452.5 L 131 252.5 Z" style="stroke-width: 0px; fill: rgb(34, 34, 34);">
+    <title>M2</title>
+  </path>
+</svg>

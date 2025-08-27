@@ -4,7 +4,7 @@
   "description": "Mirkos website",
   "author": "Mirko May <hi@mirko.nz> (https://mirko.nz)",
   "scripts": {
-    "dev": "nuxt dev",
+    "dev": "nuxt dev --host",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
@@ -19,6 +19,8 @@
     "nuxt": "^4.0.3"
   },
   "devDependencies": {
+    "@nuxtjs/color-mode": "3.5.2",
+    "@nuxtjs/google-fonts": "^3.2.0",
     "@nuxtjs/svg": "^0.4.1",
     "@tailwindcss/vite": "^4.1.12",
     "@vite-pwa/assets-generator": "^1.0.0",

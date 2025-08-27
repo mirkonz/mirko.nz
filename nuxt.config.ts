@@ -16,10 +16,10 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   app: {
     head: {
-      bodyAttrs: {
-        class: 'bg-black text-white min-h-screen min-w-screen',
-      },
       title: 'Mirko May | Font-end Engineer',
+      htmlAttrs: {
+        lang: 'en',
+      },
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -29,33 +29,21 @@ export default defineNuxtConfig({
             'Mirko May, Front-end Engineer from Wellington, creates scalable design systems with a focus on UX, accessibility, and inclusive digital products.',
         },
       ],
-      link: [
-        {
-          rel: 'preconnect',
-          href: 'https://fonts.gstatic.com',
-          crossorigin: 'anonymous',
-        },
-        {
-          rel: 'preload',
-          as: 'style',
-          href: 'https://fonts.googleapis.com/css2?family=Raleway:wght@300;600;700&display=swap',
-        },
-        {
-          rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Raleway:wght@300;600;700&display=swap',
-          media: 'print',
-          onload: `this.media='all'`,
-        },
-      ],
     },
+  },
+  googleFonts: {
+    families: {
+      Raleway: {
+        wght: [300, 600, 700],
+      },
+    },
+    display: 'swap',
   },
   css: ['@/assets/css/main.css'],
   plugins: [],
-  modules: ['@vite-pwa/nuxt'],
+  modules: ['@vite-pwa/nuxt', '@nuxtjs/color-mode', '@nuxtjs/google-fonts'],
   vite: {
     plugins: [tailwindcss(), svgLoader()],
-    // build: { sourcemap: false },
-    // css: { devSourcemap: false },
   },
   nitro: {
     preset: 'netlify-static',
@@ -63,7 +51,6 @@ export default defineNuxtConfig({
       crawlLinks: true,
       routes: ['/' /* add any dynamic paths you must include */],
     },
-    // sourceMap: false,
   },
   pwa: {
     manifest: {

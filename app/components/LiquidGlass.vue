@@ -1,6 +1,6 @@
 <template>
   <span
-    class="lg"
+    class="inline-block relative isolate overflow-hidden bg-transparent"
     v-bind="$attrs"
     ref="root"
     :style="{
@@ -9,10 +9,17 @@
       '--lg-sat': String(saturate),
     }"
   >
-    <span class="lg-effect" :style="ready ? { filter: `url(#${filterId})` } : null"></span>
-    <span class="lg-tint" :style="{ background: tint }"></span>
-    <span class="lg-shine"></span>
-    <span class="lg-text"><slot /></span>
+    <!-- Effect -->
+    <span
+      class="lg-effect absolute inset-0 z-0 bg-[rgba(255,255,255,0.001)] pointer-events-none"
+      :style="ready ? { filter: `url(#${filterId})` } : null"
+    ></span>
+    <!-- Tint -->
+    <span class="absolute inset-0 z-10 pointer-events-none" :style="{ background: tint }"></span>
+    <!-- Shine -->
+    <span class="absolute inset-0 z-20 pointer-events-none shadow-inner"></span>
+    <!-- Text -->
+    <span class="relative z-30 whitespace-nowrap"><slot /></span>
   </span>
 </template>
 
@@ -46,7 +53,7 @@ const props = withDefaults(
     phaseY: 0,
     overscanPct: 100,
     regionPadPx: 64,
-    tint: 'rgba(255,255,255,0.2)',
+    tint: 'rgba(255,255,255,0.1)',
   },
 )
 
@@ -183,7 +190,6 @@ function snapshot() {
 }
 
 function measureLayoutSize(el: HTMLElement) {
-  // Prefer borderBoxSize to avoid transforms; fall back to offset sizes
   // @ts-ignore
   const entry = (ro as any)?._lastEntry as ResizeObserverEntry | undefined
   if (entry && entry.borderBoxSize && entry.borderBoxSize[0]) {
@@ -208,7 +214,6 @@ onMounted(() => {
   if (root.value) {
     measureLayoutSize(root.value)
     ro = new ResizeObserver((entries) => {
-      // stash last entry for measureLayoutSize
       ;(ro as any)._lastEntry = entries[0]
       if (root.value) {
         measureLayoutSize(root.value)
@@ -249,45 +254,8 @@ watch(
 </script>
 
 <style scoped>
-.lg {
-  display: inline-block;
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  background: transparent;
-}
 .lg-effect {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: rgba(255, 255, 255, 0.001);
   backdrop-filter: blur(var(--lg-blur)) brightness(var(--lg-bright)) saturate(var(--lg-sat));
   -webkit-backdrop-filter: blur(var(--lg-blur)) brightness(var(--lg-bright)) saturate(var(--lg-sat));
-  pointer-events: none;
-}
-.lg-tint {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-}
-.lg-shine {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  box-shadow:
-    inset 1px 1px 1px rgba(255, 255, 255, 0.35),
-    inset -1px -1px 1px rgba(255, 255, 255, 0.15);
-  pointer-events: none;
-}
-.lg-text {
-  position: relative;
-  z-index: 3;
-  white-space: nowrap;
-}
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .lg-effect {
-    background: rgba(255, 255, 255, 0.15);
-  }
 }
 </style>

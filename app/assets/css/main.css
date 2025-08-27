@@ -1,11 +1,21 @@
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark-mode, .dark-mode *));
+
 @theme {
   --color-*: initial;
   --color-black: oklch(0.25 0 0 / 1);
   --color-white: oklch(0.9 0 0 / 1);
-  --color-green: oklch(0.91 0.25 132 / 1);
+  --color-white-darker: oklch(0.8 0 0 / 1);
+  --color-primary: oklch(0.91 0.25 132 / 1);
+  --color-primary-darker: oklch(0.8 0.25 132 / 1);
   --font-sans:
     'Raleway', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
     sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --shadow-lg: 0 0 80px 0 rgb(0 0 0 / 0.05);
+  --shadow-inner: inset 1px 1px 1px rgba(255, 255, 255, 0.2), inset -1px -1px 1px rgba(255, 255, 255, 0.15);
+}
+
+body {
+  @apply dark:bg-black dark:text-white bg-white-darker text-black transition-colors duration-500 min-h-screen min-w-screen;
 }

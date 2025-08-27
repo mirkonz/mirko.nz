@@ -17,13 +17,13 @@ const handleError = () => clearError({ redirect: '/' })
     <main class="px-6 relative z-20 flex-grow flex flex-col text-white justify-center text-center">
       <div>
         <template v-if="error.statusCode === 404">
-          <h1 class="!text-6xl text-green !mb-8">Oops! Not Found</h1>
+          <h1 class="!text-6xl text-primary !mb-8">Oops! Not Found</h1>
           <p class="!mb-8">
             Looks like you've followed a broken link or entered a URL that doesn't exist on this site.
           </p>
         </template>
         <template v-else>
-          <h1 class="!text-6xl text-green !mb-8">Oops! An error occurred</h1>
+          <h1 class="!text-6xl text-primary !mb-8">Oops! An error occurred</h1>
         </template>
 
         <code class="text-sm">
@@ -33,7 +33,7 @@ const handleError = () => clearError({ redirect: '/' })
 
         <button @click="handleError" class="cursor-pointer mt-64">
           <LiquidGlass
-            class="rounded-full [&>*]:rounded-full px-6 py-4 text-white hover:scale-110 hover:text-green transition-transform duration-150 shadow-lg shadow-black font-semibold"
+            class="rounded-full [&>*]:rounded-full px-6 py-4 text-white hover:scale-110 hover:text-primary transition-transform duration-150 shadow-lg shadow-black font-semibold"
           >
             Back to home
           </LiquidGlass>

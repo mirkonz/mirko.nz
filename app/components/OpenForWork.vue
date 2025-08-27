@@ -3,7 +3,7 @@
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 500 500"
-      class="fill-current text-green row-start-1 col-start-1"
+      class="fill-current text-primary row-start-1 col-start-1"
     >
       <path
         d="M 500 250 A 250 250 0 0 1 250 500 A 250 250 0 0 1 0 250 A 250 250 0 0 1 250 0 A 250 250 0 0 1 500 250 Z"
@@ -15,8 +15,8 @@
       ></path>
     </svg>
     <span
-      class="p-4 font-bold text-center row-start-1 col-start-1 flex items-center justify-center text-xl text-black leading-none"
-      >Open for work!</span
+      class="p-4 font-bold text-center row-start-1 col-start-1 flex items-center justify-center text-lg text-black leading-none"
+      >Open for remote work!</span
     >
   </div>
 </template>

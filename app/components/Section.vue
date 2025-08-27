@@ -15,7 +15,7 @@
   align-items: center;
   justify-content: center;
 }
-
+/*
 .page > p {
   animation: text-appear ease-in both;
   animation-timeline: view();
@@ -29,5 +29,5 @@
     color: var(--color-black);
     translate: 0 10rem;
   }
-}
+} */
 </style>
