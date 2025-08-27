@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { NuxtError } from '#app'
-import NotFoundImage from '@/public/404.svg'
+import NotFoundImage from '@/assets/icons/404.svg'
 
 defineProps({
   error: Object as () => NuxtError,

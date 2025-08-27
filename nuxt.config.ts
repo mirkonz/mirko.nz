@@ -13,6 +13,7 @@ export default defineNuxtConfig({
       posthogDefaults: process.env.POSTHOG_DEFAULTS,
     },
   },
+  devtools: { enabled: true },
   app: {
     head: {
       bodyAttrs: {
@@ -53,8 +54,8 @@ export default defineNuxtConfig({
   modules: ['@vite-pwa/nuxt'],
   vite: {
     plugins: [tailwindcss(), svgLoader()],
-    build: { sourcemap: false },
-    css: { devSourcemap: false },
+    // build: { sourcemap: false },
+    // css: { devSourcemap: false },
   },
   nitro: {
     preset: 'netlify-static',
@@ -62,7 +63,7 @@ export default defineNuxtConfig({
       crawlLinks: true,
       routes: ['/' /* add any dynamic paths you must include */],
     },
-    sourceMap: false,
+    // sourceMap: false,
   },
   pwa: {
     manifest: {
