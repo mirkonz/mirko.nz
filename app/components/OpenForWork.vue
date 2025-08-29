@@ -16,7 +16,7 @@
     </svg>
     <span
       class="p-4 font-bold text-center row-start-1 col-start-1 flex items-center justify-center text-lg text-black leading-none"
-      >Open for remote work!</span
+      >{{ $t('openForWork') }}</span
     >
   </div>
 </template>

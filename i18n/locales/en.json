@@ -1,0 +1,30 @@
+{
+  "switchTheme": "Switch to ",
+  "switchTheme.light": "light mode",
+  "switchTheme.dark": "dark mode",
+
+  "footer": "crafting websites since 1999",
+
+  "openForWork": "Open for remote work!",
+  "letsConnect": "Let’s Connect",
+  "scroll": "scroll",
+
+  "greet1": "Hello",
+  "greet2": "Kia Ora",
+  "greet3": " and",
+  "greet4": "Moin Moin",
+
+  "section1": "I’m Mirko, a Front-end and ",
+  "section1_highlight": "UI\u00A0Engineer",
+  "section1_1": " from Wellington, New\u00A0Zealand. I work at the intersection of design and engineering, creating experiences that are intuitive and resilient. I build design systems that scale with products and teams, accelerating delivery while ensuring consistency and long-term value.",
+
+  "section2": "Creating interfaces that prioritise ",
+  "section2_highlight": "user\u00A0experience",
+  "section2_1": ", accessibility, and front-end best practices, ensuring they are clear, inclusive, and engaging. Bringing together design patterns, micro-interactions, documentation, and collaboration so teams can deliver  products that are consistent, reliable, and adaptable.",
+
+  "section3": "I believe ",
+  "section3_highlight": "design",
+  "section3_1": " is about clarity and intent as much as aesthetics. My goal is to reduce friction, support ",
+  "section3_highlight_2": "creativity",
+  "section3_2": " and ensure technology remains accessible, user-centred and effective as products and teams evolve."
+}

@@ -1,25 +1,24 @@
-<!-- WordHover.vue -->
 <template>
-  <p ref="root">
+  <p class="word-hover-wrapper">
     <template v-for="(n, i) in rendered" :key="i">
-      <component :is="n" />
+      <component v-if="isVNodeItem(n)" :is="n" />
+      <template v-else>{{ n }}</template>
     </template>
   </p>
 </template>
 
 <script setup lang="ts">
-import { computed, h, Text, useSlots } from 'vue'
+import { computed, h, useSlots, cloneVNode, isVNode, Text } from 'vue'
 
 const slots = useSlots()
-const wrapClass = 'inline-block transition hover:bg-primary hover:text-black'
+const staggerDelay = 50
+const animClass = 'word-anim inline-block transition hover:bg-primary hover:text-black'
 
-function splitTextPreservingNBSP(s: string, indexOffset = 0) {
-  const out: any[] = []
+const isBreakWS = (ch: string) => ch === ' ' || ch === '\t' || ch === '\n' || ch === '\r'
+
+function splitTextPreservingNBSP(s: string) {
+  const parts: string[] = []
   let buf = ''
-  let wordIndex = indexOffset
-
-  const isBreakWS = (ch: string) => ch === ' ' || ch === '\t' || ch === '\n' || ch === '\r'
-
   for (let i = 0; i < s.length; i++) {
     const ch = s[i]
     if (ch === '\u00A0') {
@@ -28,55 +27,50 @@ function splitTextPreservingNBSP(s: string, indexOffset = 0) {
     }
     if (isBreakWS(ch)) {
       if (buf) {
-        out.push(
-          h(
-            'span',
-            {
-              class: wrapClass + ' wh-anim',
-              style: { animationDelay: `${wordIndex * 80}ms` }, // stagger
-            },
-            buf,
-          ),
-        )
+        parts.push(buf)
         buf = ''
-        wordIndex++
       }
       let j = i
       while (j + 1 < s.length && isBreakWS(s[j + 1])) j++
-      out.push(h(Text, s.slice(i, j + 1)))
+      parts.push(s.slice(i, j + 1))
       i = j
       continue
     }
     buf += ch
   }
-  if (buf) {
-    out.push(
-      h(
-        'span',
-        {
-          class: wrapClass + ' wh-anim',
-          style: { animationDelay: `${wordIndex * 80}ms` },
-        },
-        buf,
-      ),
-    )
-  }
-  return out
+  if (buf) parts.push(buf)
+  return parts
 }
 
-function renderNodes(nodes: any[], indexOffset = 0): any[] {
-  const out: any[] = []
+function renderNodes(nodes: any[]) {
+  const out: Array<string | any> = []
+  let idx = 0
+
   for (const n of nodes) {
-    if (n?.type === Text && typeof n.children === 'string') {
-      out.push(...splitTextPreservingNBSP(n.children, out.length))
-    } else {
-      out.push(n)
+    if (isVNode(n) && n.type === Text && typeof n.children === 'string') {
+      for (const part of splitTextPreservingNBSP(n.children)) {
+        if (/^\s+$/.test(part)) {
+          out.push(part)
+        } else {
+          out.push(h('span', { class: animClass, style: { animationDelay: `${idx * staggerDelay}ms` } }, part))
+          idx++
+        }
+      }
+    } else if (isVNode(n)) {
+      out.push(
+        cloneVNode(n, {
+          class: [n.props?.class, animClass],
+          style: { ...(n.props?.style || {}), animationDelay: `${idx * staggerDelay}ms` },
+        }),
+      )
+      idx++
     }
   }
   return out
 }
 
 const rendered = computed(() => renderNodes(slots.default?.() ?? []))
+const isVNodeItem = (n: any) => isVNode(n)
 </script>
 
 <style>
@@ -91,13 +85,12 @@ const rendered = computed(() => renderNodes(slots.default?.() ?? []))
   }
 }
 
-.wh-anim {
+.word-anim {
   opacity: 0;
   animation-name: wh-fade-up;
   animation-duration: 1s;
   animation-fill-mode: both;
   animation-timing-function: ease-out;
-
   animation-timeline: view();
   animation-range: entry 0% cover 40%;
 }

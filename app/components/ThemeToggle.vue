@@ -1,6 +1,11 @@
 <template>
-  <label class="cursor-pointer p-2 hover:text-primary transition-colors duration-300">
-    <span class="sr-only">Switch to {{ isDark ? 'light' : 'dark' }} mode</span>
+  <label
+    class="cursor-pointer p-2 hover:text-primary transition-colors duration-300 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-primary rounded-full"
+  >
+    <span class="sr-only">
+      {{ $t('switchTheme') }}
+      {{ isDark ? $t('switchTheme.light') : $t('switchTheme.dark') }}
+    </span>
     <input v-model="isDark" type="checkbox" class="sr-only" />
 
     <Transition name="fade" mode="out-in">

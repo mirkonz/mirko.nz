@@ -17,9 +17,6 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: 'Mirko May | Font-end Engineer',
-      htmlAttrs: {
-        lang: 'en',
-      },
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -29,6 +26,7 @@ export default defineNuxtConfig({
             'Mirko May, Front-end Engineer from Wellington, creates scalable design systems with a focus on UX, accessibility, and inclusive digital products.',
         },
       ],
+      script: [{ src: '/particles.min.js', defer: false }],
     },
   },
   googleFonts: {
@@ -39,9 +37,20 @@ export default defineNuxtConfig({
     },
     display: 'swap',
   },
+  i18n: {
+    baseUrl: 'https://mirko.nz',
+    defaultLocale: 'en',
+    locales: [
+      { code: 'en', language: 'en', name: 'English', file: 'en.json' },
+      { code: 'de', language: 'de', name: 'Deutsch', file: 'de.json' },
+    ],
+  },
   css: ['@/assets/css/main.css'],
+  colorMode: {
+    // preference: 'dark',
+  },
   plugins: [],
-  modules: ['@vite-pwa/nuxt', '@nuxtjs/color-mode', '@nuxtjs/google-fonts'],
+  modules: ['@vite-pwa/nuxt', '@nuxtjs/color-mode', '@nuxtjs/google-fonts', '@nuxtjs/i18n'],
   vite: {
     plugins: [tailwindcss(), svgLoader()],
   },

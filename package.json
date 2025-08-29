@@ -21,6 +21,7 @@
   "devDependencies": {
     "@nuxtjs/color-mode": "3.5.2",
     "@nuxtjs/google-fonts": "^3.2.0",
+    "@nuxtjs/i18n": "10.0.6",
     "@nuxtjs/svg": "^0.4.1",
     "@tailwindcss/vite": "^4.1.12",
     "@vite-pwa/assets-generator": "^1.0.0",

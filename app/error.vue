@@ -31,13 +31,7 @@ const handleError = () => clearError({ redirect: '/' })
           <div>Error message: {{ error.message }}</div>
         </code>
 
-        <button @click="handleError" class="cursor-pointer mt-64">
-          <LiquidGlass
-            class="rounded-full [&>*]:rounded-full px-6 py-4 text-white hover:scale-110 hover:text-primary transition-transform duration-150 shadow-lg shadow-black font-semibold"
-          >
-            Back to home
-          </LiquidGlass>
-        </button>
+        <Button class="hover:scale-110 mt-64" @click="handleError"> Back to home </Button>
       </div>
     </main>
     <Footer class="@container px-6 fixed z-10 bottom-0 left-0 right-0" />

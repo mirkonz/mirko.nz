@@ -1,33 +1,5 @@
 <template>
-  <div class="page">
+  <div class="min-h-[90vh] md:min-h-[75vh] relative flex flex-col items-center justify-center">
     <slot />
   </div>
 </template>
-
-<script lang="ts" setup></script>
-
-<style>
-.page {
-  min-height: 90vh;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-/*
-.page > p {
-  animation: text-appear ease-in both;
-  animation-timeline: view();
-  animation-range: 0vh 50vh;
-}
-
-@keyframes text-appear {
-  from {
-    opacity: 0;
-    filter: blur(var(--blur-xl));
-    color: var(--color-black);
-    translate: 0 10rem;
-  }
-} */
-</style>
