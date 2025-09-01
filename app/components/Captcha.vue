@@ -94,10 +94,19 @@ function draw() {
   if (!ctx) return
   ctx.clearRect(0, 0, cssW, cssH)
 
+  const root = document.documentElement
+  const isDark = root.classList.contains('dark-mode') || document.body.classList.contains('dark-mode')
+  const styles = getComputedStyle(root)
+  const colorPrimary = (styles.getPropertyValue('--color-primary') || '').trim()
+  const colorWhite = (styles.getPropertyValue('--color-white') || '').trim()
+  const colorBlack = (styles.getPropertyValue('--color-black') || '').trim()
+  const lineColor = isDark ? colorWhite : colorBlack
+  const guideDotFill = isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)'
+
   for (let i = 0; i < dots.length; i++) {
     const d = dots[i]
     if (i > 0) {
-      ctx.strokeStyle = '#fff'
+      ctx.strokeStyle = lineColor
       ctx.lineWidth = 2
       ctx.beginPath()
       ctx.moveTo(d.x, d.y)
@@ -109,14 +118,14 @@ function draw() {
   for (let i = 0; i < guideDots.length; i++) {
     if (!drawingCompleted && i === currentIndex) continue
     const g = guideDots[i]
-    ctx.fillStyle = 'rgba(255,255,255,0.2)'
+    ctx.fillStyle = guideDotFill
     ctx.beginPath()
     ctx.ellipse(g.x, g.y, dotSize.value / 4, dotSize.value / 4, 0, 0, Math.PI * 2)
     ctx.fill()
   }
 
   if (!drawingCompleted && currentIndex > 0) {
-    ctx.strokeStyle = 'oklch(0.91 0.25 132 / 1)'
+    ctx.strokeStyle = colorPrimary
     ctx.lineWidth = 2
     ctx.beginPath()
     ctx.moveTo(lastPos.x, lastPos.y)
@@ -126,14 +135,14 @@ function draw() {
 
   if (!drawingCompleted && guideDots[currentIndex]) {
     const g = guideDots[currentIndex]
-    ctx.fillStyle = 'oklch(0.91 0.25 132 / 1)'
+    ctx.fillStyle = colorPrimary
     ctx.beginPath()
     ctx.ellipse(g.x, g.y, dotSize.value / 1, dotSize.value / 1, 0, 0, Math.PI * 2)
     ctx.fill()
   }
 
   if (drawingCompleted && dots.length > 1) {
-    ctx.strokeStyle = '#fff'
+    ctx.strokeStyle = lineColor
     ctx.lineWidth = 2
     ctx.beginPath()
     ctx.moveTo(dots[0].x, dots[0].y)

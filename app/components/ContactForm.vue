@@ -2,26 +2,7 @@
   <div>
     <h2 class="mb-4 text-2xl text-primary text-center">{{ $t('contact.title') }}</h2>
 
-    <!-- <Transition
-      mode="out-in"
-      @before-enter="hBeforeEnter"
-      @enter="hEnter"
-      @after-enter="hAfterEnter"
-      @before-leave="hBeforeLeave"
-      @leave="hLeave"
-      @after-leave="hAfterLeave"
-    >
-      <div v-if="!showSubmit" key="gate" class="overflow-hidden">
-        <div class="flex flex-col items-center gap-2">
-          <h3 class="text-xs opacity-70">Connect the dots to show the contact form</h3>
-          <div class="w-32 h-32">
-            <Captcha ref="captchaRef" @completed="onCompleted" />
-          </div>
-        </div>
-      </div> -->
-
-    <!-- <div key="form" class="overflow-visible"> -->
-    <Form :validation-schema="schema" :initial-values="{ name: '', email: '', message: '' }" @submit="onSubmit" v-slot="{ meta, isSubmitting }" class="relative flex flex-col gap-5">
+    <Form ref="formRef" :validation-schema="schema" :initial-values="{ name: '', email: '', message: '' }" @submit="onSubmit" v-slot="{ meta, isSubmitting }" class="relative flex flex-col gap-5">
       <Field name="name" v-slot="{ field, meta: m, errors }">
         <div class="group relative">
           <label for="name" class="pointer-events-none absolute left-3 top-2 z-10 text-xs opacity-70 transition group-focus-within:text-primary">{{ $t('contact.fields.name') }}</label>
@@ -59,7 +40,7 @@
       <Field name="message" v-slot="{ field, meta: m, errors }">
         <div class="group relative">
           <label for="message" class="pointer-events-none absolute left-3 top-2 z-10 text-xs opacity-70 transition group-focus-within:text-primary">{{ $t('contact.fields.message') }}</label>
-          <textarea v-bind="field" id="message" rows="5" @focus="focus.message = true" @blur="focus.message = false" :class="[
+          <textarea v-bind="field" id="message" rows="3" @focus="focus.message = true" @blur="focus.message = false" :class="[
             `${baseInput} resize-y`,
             focus.message && m.valid && field.value ? 'ring-2 ring-primary' : '',
             m.touched && !m.valid ? 'ring-2 ring-error' : '',
@@ -73,38 +54,40 @@
         </div>
       </Field>
 
-      <Button type="submit" :disabled="!meta.valid || isSubmitting" class="px-5 py-2">
+      <Button type="submit" :disabled="isSubmitting" class="px-5 py-2">
         <span v-if="!isSubmitting">{{ $t('contact.submit') }}</span>
         <span v-else>{{ $t('contact.sending') }}</span>
       </Button>
     </Form>
-    <!-- </div>
-    </Transition> -->
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { Form, Field } from 'vee-validate'
 import { z } from 'zod'
-import { toFormValidator } from '@vee-validate/zod'
-const { t } = useI18n()
+import { toTypedSchema } from '@vee-validate/zod'
+import type { FormContext } from 'vee-validate'
+const { t, locale } = useI18n()
 
-const captchaRef = ref<InstanceType<typeof Captcha> | null>(null)
 const focus = ref({ name: false, email: false, message: false })
-// const showSubmit = ref(false)
 
-const schema = toFormValidator(
-  z.object({
-    name: z.string().min(2, t('contact.validation.name_min')),
-    email: z.string().email(t('contact.validation.email')),
-    message: z.string().min(10, t('contact.validation.message_min')),
-  }),
+// Make schema reactive so messages update with locale
+const schema = computed(() =>
+  toTypedSchema(
+    z.object({
+      name: z.string().min(2, t('contact.validation.name_min')),
+      email: z.email(t('contact.validation.email')),
+      message: z.string().min(10, t('contact.validation.message_min')),
+    }),
+  ),
 )
 
-// function onCompleted() {
-//   showSubmit.value = true
-// }
+// Re-validate on locale change to refresh shown errors immediately
+const formRef = ref<FormContext | null>(null)
+watch(locale, () => {
+  formRef.value?.validate()
+})
 
 async function onSubmit(values: { name: string; email: string; message: string }) {
   await new Promise((r) => setTimeout(r, 700))
@@ -112,41 +95,7 @@ async function onSubmit(values: { name: string; email: string; message: string }
 }
 
 const baseInput =
-  'w-full rounded-xl px-3 pt-6 pb-3 bg-black/10 dark:bg-white/20 text-white placeholder:opacity-0 outline-none ring-0 focus-visible:ring-2 focus-visible:ring-white focus:backdrop-blur-lg transition-all duration-500'
-
-function hBeforeEnter(el: Element) {
-  const e = el as HTMLElement
-  e.style.height = '0px'
-}
-function hEnter(el: Element) {
-  const e = el as HTMLElement
-  const h = e.scrollHeight
-  e.style.transition = 'height 200ms ease'
-  requestAnimationFrame(() => {
-    e.style.height = `${h}px`
-  })
-}
-function hAfterEnter(el: Element) {
-  const e = el as HTMLElement
-  e.style.height = ''
-  e.style.transition = ''
-}
-function hBeforeLeave(el: Element) {
-  const e = el as HTMLElement
-  e.style.height = `${e.scrollHeight}px`
-}
-function hLeave(el: Element) {
-  const e = el as HTMLElement
-  e.style.transition = 'height 200ms ease'
-  requestAnimationFrame(() => {
-    e.style.height = '0px'
-  })
-}
-function hAfterLeave(el: Element) {
-  const e = el as HTMLElement
-  e.style.height = ''
-  e.style.transition = ''
-}
+  'w-full rounded-xl px-3 pt-6 pb-3 bg-black/10 dark:bg-white/20 text-black dark:text-white placeholder:opacity-0 outline-none ring-0 focus-visible:ring-2 focus-visible:ring-white focus:backdrop-blur-lg transition-all duration-500'
 </script>
 
 <style scoped>

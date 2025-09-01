@@ -39,6 +39,6 @@
   "contact.validation.message_min": "Bitte gib mindestens 10 Zeichen ein",
   "contact.thanks": "Danke, {name}!"
   ,
-  "captcha.title": "Verbinde die Punkte",
+  "captcha.title": "Verbinde die Punkte!",
   "cancel": "Abbrechen"
 }

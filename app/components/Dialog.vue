@@ -1,23 +1,16 @@
 <template>
   <ClientOnly>
-    <dialog
-      ref="el"
-      class="fixed rounded-xl left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 m-0 p-0 bg-transparent outline-none dark:text-white backdrop:bg-transparent"
-    >
-      <div
-        class="relative rounded-xl p-6 w-[28rem] max-w-[80vw] max-h-[calc(100vh-2rem)] overflow-auto transition duration-200 ease-out"
-        :class="entered ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-2'"
-      >
-        <button
-          type="button"
-          class="absolute right-3 top-3 p-1 w-6 h-6 rounded-full focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-primary leading-0"
-          @click="close"
-          aria-label="Close"
-        >
-          ✕
-        </button>
-        <slot />
+    <dialog ref="el" class="fixed rounded-xl  m-0 p-0 bg-transparent outline-none dark:text-white backdrop:bg-transparent backdrop:pointer-events-auto">
+      <div class="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div class="relative rounded-xl p-6 w-[28rem] max-w-[80vw] max-h-[calc(100vh-2rem)] overflow-auto transition duration-200 ease-out" :class="entered ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-2'">
+          <button type="button" class="absolute right-3 top-3 p-1 w-6 h-6 rounded-full focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-primary leading-0" @click="close" :aria-label="$t('cancel')">
+            ✕
+          </button>
+          <slot />
+        </div>
       </div>
+      <ThemeToggle class="fixed z-50 top-6 left-1/2 transform -translate-x-1/2 sm:left-8" />
+      <Footer class="@container px-6 fixed z-50 bottom-0 left-0 right-0" />
     </dialog>
   </ClientOnly>
 </template>
