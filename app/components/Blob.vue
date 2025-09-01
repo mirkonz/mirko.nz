@@ -30,20 +30,20 @@ onMounted(() => {
   }
 
   const root = document.documentElement
-  let x = innerWidth / 2,
-    y = innerHeight / 2
-  let fx = x,
-    fy = y,
-    lastX = x,
-    lastY = y
-  let hue = 200,
-    hueBase = 200,
-    tweenStartHue = 200,
-    tweenStart = 0,
-    tweenEnd = 0
-  let speed = 0,
-    lastMoveAt = 0,
-    alpha = 0
+  let x = innerWidth / 2
+  let y = innerHeight / 2
+  let fx = x
+  let fy = y
+  let lastX = x
+  let lastY = y
+  let hue = 200
+  let hueBase = 200
+  let tweenStartHue = 200
+  let tweenStart = 0
+  let tweenEnd = 0
+  let speed = 0
+  let lastMoveAt = 0
+  let alpha = 0
   const seed = Math.random() * 1000
   const phase = {
     g1x: seed + 0.13,
@@ -59,8 +59,8 @@ onMounted(() => {
     (e) => {
       x = e.clientX
       y = e.clientY
-      const dx = x - lastX,
-        dy = y - lastY
+      const dx = x - lastX
+      const dy = y - lastY
       const dist = Math.hypot(dx, dy)
       if (dist > 0) {
         hueBase = (hueBase + dist * cfg.hueStepPerPx) % 360
@@ -86,8 +86,8 @@ onMounted(() => {
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v))
 
   function frame(t) {
-    const px = fx,
-      py = fy
+    const px = fx
+    const py = fy
     fx = lerp(fx, x, cfg.followLerp)
     fy = lerp(fy, y, cfg.followLerp)
     const frameSpeed = Math.hypot(fx - px, fy - py)
@@ -114,32 +114,32 @@ onMounted(() => {
     const s3 = Math.sin((time + phase.g3x) * cfg.freq3 * freqBoost)
     const c3 = Math.cos((time + phase.g3y) * cfg.freq3 * 1.12 * freqBoost)
 
-    const halfW = 210 * scale,
-      halfH = 210 * scale
-    const p1x = 50 + ((s1 * orbit) / halfW) * 50,
-      p1y = 50 + ((c1 * orbit) / halfH) * 50
-    const p2x = 50 + ((s2 * orbit) / halfW) * 50,
-      p2y = 50 + ((c2 * orbit) / halfH) * 50
-    const p3x = 50 + ((s3 * orbit) / halfW) * 50,
-      p3y = 50 + ((c3 * orbit) / halfH) * 50
+    const halfW = 210 * scale
+    const halfH = 210 * scale
+    const p1x = 50 + ((s1 * orbit) / halfW) * 50
+    const p1y = 50 + ((c1 * orbit) / halfH) * 50
+    const p2x = 50 + ((s2 * orbit) / halfW) * 50
+    const p2y = 50 + ((c2 * orbit) / halfH) * 50
+    const p3x = 50 + ((s3 * orbit) / halfW) * 50
+    const p3y = 50 + ((c3 * orbit) / halfH) * 50
 
-    const alphaNorm = Math.pow(norm, cfg.alphaPower)
+    const alphaNorm = norm ** cfg.alphaPower
     const targetAlpha = cfg.minAlpha + (cfg.maxAlpha - cfg.minAlpha) * alphaNorm
     const fadeMs = t - lastMoveAt <= cfg.activityLingerMs ? cfg.fadeInMs : cfg.fadeOutMs
     const k = fadeMs > 0 ? clamp(1 - Math.exp(-16 / fadeMs), 0, 1) : 1
     alpha = lerp(alpha, targetAlpha, k)
 
-    root.style.setProperty('--x', fx + 'px')
-    root.style.setProperty('--y', fy + 'px')
+    root.style.setProperty('--x', `${fx}px`)
+    root.style.setProperty('--y', `${fy}px`)
     root.style.setProperty('--h', hue.toFixed(2))
     root.style.setProperty('--scale', scale.toFixed(3))
     root.style.setProperty('--alpha', alpha.toFixed(3))
-    root.style.setProperty('--g1x', p1x.toFixed(2) + '%')
-    root.style.setProperty('--g1y', p1y.toFixed(2) + '%')
-    root.style.setProperty('--g2x', p2x.toFixed(2) + '%')
-    root.style.setProperty('--g2y', p2y.toFixed(2) + '%')
-    root.style.setProperty('--g3x', p3x.toFixed(2) + '%')
-    root.style.setProperty('--g3y', p3y.toFixed(2) + '%')
+    root.style.setProperty('--g1x', `${p1x.toFixed(2)}%`)
+    root.style.setProperty('--g1y', `${p1y.toFixed(2)}%`)
+    root.style.setProperty('--g2x', `${p2x.toFixed(2)}%`)
+    root.style.setProperty('--g2y', `${p2y.toFixed(2)}%`)
+    root.style.setProperty('--g3x', `${p3x.toFixed(2)}%`)
+    root.style.setProperty('--g3y', `${p3y.toFixed(2)}%`)
 
     requestAnimationFrame(frame)
   }

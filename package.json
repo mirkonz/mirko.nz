@@ -8,7 +8,15 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "generate-assets": "pwa-assets-generator --preset minimal-2023 public/logo.svg"
+    "generate-assets": "pwa-assets-generator --preset minimal-2023 public/logo.svg",
+    "format": "biome format --write .",
+    "format:check": "biome format --write=false .",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint --apply .",
+    "lint:css": "stylelint \"**/*.{css,vue}\"",
+    "lint:css:fix": "stylelint \"**/*.{css,vue}\" --fix",
+    "lint:all": "pnpm run lint && pnpm run lint:css",
+    "check": "biome ci ."
   },
   "repository": {
     "type": "git",
@@ -24,18 +32,19 @@
     "@nuxtjs/i18n": "10.0.6",
     "@nuxtjs/svg": "^0.4.1",
     "@tailwindcss/vite": "^4.1.12",
+    "@vee-validate/zod": "^4.15.1",
     "@vite-pwa/assets-generator": "^1.0.0",
     "@vite-pwa/nuxt": "^1.0.4",
     "@vue/compiler-sfc": "^3.5.20",
+    "@biomejs/biome": "^1.9.3",
     "eslint": "^9.34.0",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-prettier": "^5.5.4",
     "netlify-cli": "^23.4.0",
     "posthog-js": "^1.260.3",
-    "prettier": "^3.6.2",
     "tailwindcss": "^4.1.12",
+    "vee-validate": "^4.15.1",
     "vite-svg-loader": "^5.1.0",
-    "vue": "^3.5.20"
+    "vue": "^3.5.20",
+    "zod": "^4.1.5"
   },
   "packageManager": "pnpm@10.15.0"
 }

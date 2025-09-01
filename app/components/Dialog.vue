@@ -2,11 +2,10 @@
   <ClientOnly>
     <dialog
       ref="el"
-      class="fixed rounded-xl left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 m-0 p-0 bg-transparent outline-none backdrop:backdrop-blur-sm backdrop:bg-white/10 dark:backdrop:bg-black/10 drop-shadow-2xl/50 dark:text-white"
-      @click="onBackdrop"
+      class="fixed rounded-xl left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 m-0 p-0 bg-transparent outline-none dark:text-white backdrop:bg-transparent"
     >
       <div
-        class="relative rounded-xl p-6 w-[28rem] max-w-[80vw] max-h-[calc(100vh-2rem)] overflow-auto bg-white dark:bg-black transition duration-200 ease-out"
+        class="relative rounded-xl p-6 w-[28rem] max-w-[80vw] max-h-[calc(100vh-2rem)] overflow-auto transition duration-200 ease-out"
         :class="entered ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-2'"
       >
         <button
@@ -25,7 +24,7 @@
 
 <script setup lang="ts">
 const props = defineProps<{ open: boolean }>()
-const emit = defineEmits<{ (e: 'update:open', v: boolean): void }>()
+const emit = defineEmits<(e: 'update:open', v: boolean) => void>()
 const el = ref<HTMLDialogElement | null>(null)
 const entered = ref(false)
 

@@ -9,7 +9,7 @@ const otherLocales = computed(() => locales.value.filter((l) => l.code !== local
     v-for="l in otherLocales"
     :key="l.code"
     @click="setLocale(l.code)"
-    class="underline cursor-pointer focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-primary rounded"
+    class="underline cursor-pointer hover:text-primary focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-primary rounded"
   >
     {{ l.name }}
   </button>

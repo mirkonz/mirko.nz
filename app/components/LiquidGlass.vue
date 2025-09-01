@@ -110,8 +110,8 @@ function createFilter() {
   if (!defs) return
   const ns = 'http://www.w3.org/2000/svg'
   filterEl = document.createElementNS(ns, 'filter')
-  feImageEl = document.createElementNS(ns, 'feImage') as any
-  feDispEl = document.createElementNS(ns, 'feDisplacementMap') as any
+  feImageEl = document.createElementNS(ns, 'feImage') as unknown as SVGFEImageElement
+  feDispEl = document.createElementNS(ns, 'feDisplacementMap') as unknown as SVGFEDisplacementMapElement
 
   filterEl.id = filterId.value
   filterEl.setAttribute('filterUnits', 'userSpaceOnUse')
@@ -142,7 +142,7 @@ function updateFilterFrame() {
   feImageEl.setAttribute('y', String(fy.value))
   feImageEl.setAttribute('width', String(fw.value))
   feImageEl.setAttribute('height', String(fh.value))
-  ;(feImageEl as any).setAttribute('href', imageHref.value)
+  feImageEl.setAttribute('href', imageHref.value)
   feImageEl.setAttributeNS('http://www.w3.org/1999/xlink', 'href', imageHref.value)
 
   feDispEl.setAttribute('scale', String(scale.value))
@@ -157,7 +157,11 @@ function sizeCanvas() {
 
 function renderMap() {
   if (!canvas) return
-  if (!ctx) ctx = canvas.getContext('2d')!
+  if (!ctx) {
+    const c = canvas.getContext('2d')
+    if (!c) return
+    ctx = c
+  }
   const cw = canvas.width
   const ch = canvas.height
   const img = ctx.createImageData(cw, ch)
@@ -189,10 +193,11 @@ function snapshot() {
   updateFilterFrame()
 }
 
+let lastEntry: ResizeObserverEntry | undefined
+
 function measureLayoutSize(el: HTMLElement) {
-  // @ts-ignore
-  const entry = (ro as any)?._lastEntry as ResizeObserverEntry | undefined
-  if (entry && entry.borderBoxSize && entry.borderBoxSize[0]) {
+  const entry = lastEntry
+  if (entry?.borderBoxSize?.[0]) {
     const b = entry.borderBoxSize[0]
     w.value = Math.max(1, Math.round(b.inlineSize))
     h.value = Math.max(1, Math.round(b.blockSize))
@@ -214,7 +219,7 @@ onMounted(() => {
   if (root.value) {
     measureLayoutSize(root.value)
     ro = new ResizeObserver((entries) => {
-      ;(ro as any)._lastEntry = entries[0]
+      lastEntry = entries[0]
       if (root.value) {
         measureLayoutSize(root.value)
         snapshot()

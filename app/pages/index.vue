@@ -4,9 +4,8 @@
     <section class="flex flex-col items-center">
       <div class="max-w-prose relative">
         <h1 class="sr-only">Mirko May</h1>
-        <OpenForWork class="w-24 h-24 fixed z-30 top-8 right-8 drop-shadow-xl/25" />
         <Section>
-          <ScrollIndicator class="text-center fixed bottom-24 right-0 left-0 hidden sm:block" />
+          <ScrollIndicator class="text-center fixed bottom-28 right-0 left-0 hidden sm:block" />
           <h2 class="text-4xl leading-tight mb-4 mr-auto">
             <span class="block md:inline">
               <span class="text-primary text-shadow-lg" v-html="`${$t('greet1')}`" />,

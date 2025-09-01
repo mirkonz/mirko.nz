@@ -1,12 +1,15 @@
-import { defineNuxtConfig } from 'nuxt/config'
 import tailwindcss from '@tailwindcss/vite'
+import { defineNuxtConfig } from 'nuxt/config'
 import svgLoader from 'vite-svg-loader'
 
 export default defineNuxtConfig({
   components: true,
   runtimeConfig: {
     public: {
-      url: process.env.NODE_ENV === 'production' ? process.env.URL || 'https://mirko.nz' : 'http://localhost:3000',
+      url:
+        process.env.NODE_ENV === 'production'
+          ? process.env.URL || 'https://mirko.nz'
+          : 'http://localhost:3000',
       lang: 'en-NZ',
       posthogPublicKey: process.env.POSTHOG_PUBLIC_KEY,
       posthogHost: process.env.POSTHOG_HOST,

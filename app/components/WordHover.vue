@@ -9,6 +9,7 @@
 
 <script setup lang="ts">
 import { computed, h, useSlots, cloneVNode, isVNode, Text } from 'vue'
+import type { VNode } from 'vue'
 
 const slots = useSlots()
 const staggerDelay = 50
@@ -42,8 +43,8 @@ function splitTextPreservingNBSP(s: string) {
   return parts
 }
 
-function renderNodes(nodes: any[]) {
-  const out: Array<string | any> = []
+function renderNodes(nodes: VNode[]) {
+  const out: Array<string | VNode> = []
   let idx = 0
 
   for (const n of nodes) {
@@ -70,7 +71,7 @@ function renderNodes(nodes: any[]) {
 }
 
 const rendered = computed(() => renderNodes(slots.default?.() ?? []))
-const isVNodeItem = (n: any) => isVNode(n)
+const isVNodeItem = (n: unknown): n is VNode => isVNode(n)
 </script>
 
 <style>

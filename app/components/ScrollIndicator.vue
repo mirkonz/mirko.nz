@@ -1,6 +1,6 @@
 <template>
-  <div class="scroll-indicator flex flex-col gap-2">
-    <div class="inline-block w-6 h-6 rounded-full animate-bounce">
+  <div class="scroll-indicator flex flex-col gap-0">
+    <div class="inline-block w-4 h-4 animate-bounce">
       <svg viewBox="0 0 24 24" class="fill-current text-primary">
         <path
           fill="currentColor"
@@ -8,7 +8,7 @@
         ></path>
       </svg>
     </div>
-    <div class="uppercase tracking-wide text-sm">{{ $t('scroll') }}</div>
+    <div class="uppercase tracking-wide text-xs opacity-50">{{ $t('scroll') }}</div>
   </div>
 </template>
 
