@@ -26,5 +26,19 @@
   "section3_highlight": "design",
   "section3_1": " is about clarity and intent as much as aesthetics. My goal is to reduce friction, support ",
   "section3_highlight_2": "creativity",
-  "section3_2": " and ensure technology remains accessible, user-centred and effective as products and teams evolve."
+  "section3_2": " and ensure technology remains accessible, user-centred and effective as products and teams evolve.",
+
+  "contact.title": "Contact form",
+  "contact.fields.name": "Name",
+  "contact.fields.email": "Email",
+  "contact.fields.message": "Message",
+  "contact.submit": "Send",
+  "contact.sending": "Sending…",
+  "contact.validation.name_min": "Please enter at least 2 characters",
+  "contact.validation.email": "Please enter a valid email",
+  "contact.validation.message_min": "Please enter at least 10 characters",
+  "contact.thanks": "Thanks, {name}!"
+  ,
+  "captcha.title": "Connect the dots",
+  "cancel": "Cancel"
 }

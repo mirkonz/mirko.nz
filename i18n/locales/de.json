@@ -26,5 +26,19 @@
   "section3_highlight": "Design",
   "section3_1": " bedeutet für mich Klarheit und Absicht ebenso wie Ästhetik. Mein Ziel ist es, Hürden zu verringern, ",
   "section3_highlight_2": "Kreativität",
-  "section3_2": " zu fördern und sicherzustellen, dass Technologie nutzerorientiert, zugänglich und wirksam bleibt, während Produkte und Teams wachsen."
+  "section3_2": " zu fördern und sicherzustellen, dass Technologie nutzerorientiert, zugänglich und wirksam bleibt, während Produkte und Teams wachsen.",
+
+  "contact.title": "Kontaktformular",
+  "contact.fields.name": "Name",
+  "contact.fields.email": "E-Mail",
+  "contact.fields.message": "Nachricht",
+  "contact.submit": "Absenden",
+  "contact.sending": "Wird gesendet…",
+  "contact.validation.name_min": "Bitte gib mindestens 2 Zeichen ein",
+  "contact.validation.email": "Bitte gib eine gültige E-Mail ein",
+  "contact.validation.message_min": "Bitte gib mindestens 10 Zeichen ein",
+  "contact.thanks": "Danke, {name}!"
+  ,
+  "captcha.title": "Verbinde die Punkte",
+  "cancel": "Abbrechen"
 }

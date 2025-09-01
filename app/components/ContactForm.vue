@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="mb-4 text-2xl text-primary text-center">Kontaktformular</h2>
+    <h2 class="mb-4 text-2xl text-primary text-center">{{ $t('contact.title') }}</h2>
 
     <!-- <Transition
       mode="out-in"
@@ -24,7 +24,7 @@
     <Form :validation-schema="schema" :initial-values="{ name: '', email: '', message: '' }" @submit="onSubmit" v-slot="{ meta, isSubmitting }" class="relative flex flex-col gap-5">
       <Field name="name" v-slot="{ field, meta: m, errors }">
         <div class="group relative">
-          <label for="name" class="pointer-events-none absolute left-3 top-2 z-10 text-xs opacity-70 transition group-focus-within:text-primary">Name</label>
+          <label for="name" class="pointer-events-none absolute left-3 top-2 z-10 text-xs opacity-70 transition group-focus-within:text-primary">{{ $t('contact.fields.name') }}</label>
           <input v-bind="field" id="name" type="text" @focus="focus.name = true" @blur="focus.name = false" :class="[
             baseInput,
             focus.name && m.valid && field.value ? 'ring-2 ring-primary' : '',
@@ -41,7 +41,7 @@
 
       <Field name="email" v-slot="{ field, meta: m, errors }">
         <div class="group relative">
-          <label for="email" class="pointer-events-none absolute left-3 top-2 z-10 text-xs opacity-70 transition group-focus-within:text-primary">Email</label>
+          <label for="email" class="pointer-events-none absolute left-3 top-2 z-10 text-xs opacity-70 transition group-focus-within:text-primary">{{ $t('contact.fields.email') }}</label>
           <input v-bind="field" id="email" type="email" @focus="focus.email = true" @blur="focus.email = false" :class="[
             baseInput,
             focus.email && m.valid && field.value ? 'ring-2 ring-primary' : '',
@@ -58,7 +58,7 @@
 
       <Field name="message" v-slot="{ field, meta: m, errors }">
         <div class="group relative">
-          <label for="message" class="pointer-events-none absolute left-3 top-2 z-10 text-xs opacity-70 transition group-focus-within:text-primary">Nachricht</label>
+          <label for="message" class="pointer-events-none absolute left-3 top-2 z-10 text-xs opacity-70 transition group-focus-within:text-primary">{{ $t('contact.fields.message') }}</label>
           <textarea v-bind="field" id="message" rows="5" @focus="focus.message = true" @blur="focus.message = false" :class="[
             `${baseInput} resize-y`,
             focus.message && m.valid && field.value ? 'ring-2 ring-primary' : '',
@@ -74,8 +74,8 @@
       </Field>
 
       <Button type="submit" :disabled="!meta.valid || isSubmitting" class="px-5 py-2">
-        <span v-if="!isSubmitting">Absenden</span>
-        <span v-else>Wird gesendet…</span>
+        <span v-if="!isSubmitting">{{ $t('contact.submit') }}</span>
+        <span v-else>{{ $t('contact.sending') }}</span>
       </Button>
     </Form>
     <!-- </div>
@@ -88,6 +88,7 @@ import { ref } from 'vue'
 import { Form, Field } from 'vee-validate'
 import { z } from 'zod'
 import { toFormValidator } from '@vee-validate/zod'
+const { t } = useI18n()
 
 const captchaRef = ref<InstanceType<typeof Captcha> | null>(null)
 const focus = ref({ name: false, email: false, message: false })
@@ -95,9 +96,9 @@ const focus = ref({ name: false, email: false, message: false })
 
 const schema = toFormValidator(
   z.object({
-    name: z.string().min(2, 'Bitte gib mindestens 2 Zeichen ein'),
-    email: z.string().email('Bitte gib eine gültige E-Mail ein'),
-    message: z.string().min(10, 'Bitte mindestens 10 Zeichen'),
+    name: z.string().min(2, t('contact.validation.name_min')),
+    email: z.string().email(t('contact.validation.email')),
+    message: z.string().min(10, t('contact.validation.message_min')),
   }),
 )
 
@@ -107,7 +108,7 @@ const schema = toFormValidator(
 
 async function onSubmit(values: { name: string; email: string; message: string }) {
   await new Promise((r) => setTimeout(r, 700))
-  alert(`Danke, ${values.name}!`)
+  alert(t('contact.thanks', { name: values.name }))
 }
 
 const baseInput =
