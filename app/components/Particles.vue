@@ -1,17 +1,14 @@
-<template>
-  <div class="pointer-events-none" id="particles"></div>
-</template>
-
 <script lang="ts" setup>
-import { useHead } from 'nuxt/app'
-import { onMounted, watchEffect } from 'vue'
+import { watchEffect } from 'vue'
+
 const colorMode = useColorMode()
 
 function loadParticles(colorMode) {
   if (typeof particlesJS !== 'undefined') {
     if (colorMode === 'dark') {
       particlesJS.load('particles', '/particles-dark.json')
-    } else {
+    }
+    else {
       particlesJS.load('particles', '/particles-light.json')
     }
   }
@@ -19,3 +16,7 @@ function loadParticles(colorMode) {
 
 watchEffect(() => loadParticles(colorMode.value))
 </script>
+
+<template>
+  <div id="particles" class="pointer-events-none" />
+</template>

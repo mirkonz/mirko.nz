@@ -10,20 +10,24 @@ const handleError = () => clearError({ redirect: '/' })
 </script>
 
 <template>
-  <div class="min-h-screen min-w-screen flex flex-col flex-grow">
-    <div class="fixed inset-0 w-full h-full flex justify-center items-center">
-      <NotFoundImage class="object-cover fill-current scale-150 origin-[50%_65%]" />
+  <div class="flex min-h-screen min-w-screen flex-grow flex-col">
+    <div class="fixed inset-0 flex h-full w-full items-center justify-center">
+      <NotFoundImage class="origin-[50%_65%] scale-150 fill-current object-cover" />
     </div>
-    <main class="px-6 relative z-20 flex-grow flex flex-col text-white justify-center text-center">
+    <main class="relative z-20 flex flex-grow flex-col justify-center px-6 text-center text-white">
       <div>
         <template v-if="error.statusCode === 404">
-          <h1 class="!text-6xl text-primary !mb-8">Oops! Not Found</h1>
+          <h1 class="text-primary !mb-8 !text-6xl">
+            Oops! Not Found
+          </h1>
           <p class="!mb-8">
             Looks like you've followed a broken link or entered a URL that doesn't exist on this site.
           </p>
         </template>
         <template v-else>
-          <h1 class="!text-6xl text-primary !mb-8">Oops! An error occurred</h1>
+          <h1 class="text-primary !mb-8 !text-6xl">
+            Oops! An error occurred
+          </h1>
         </template>
 
         <code class="text-sm">
@@ -31,9 +35,11 @@ const handleError = () => clearError({ redirect: '/' })
           <div>Error message: {{ error.message }}</div>
         </code>
 
-        <Button class="hover:scale-110 mt-64" @click="handleError"> Back to home </Button>
+        <Button class="mt-64 hover:scale-110" @click="handleError">
+          Back to home
+        </Button>
       </div>
     </main>
-    <Footer class="@container px-6 fixed z-10 bottom-0 left-0 right-0" />
+    <Footer class="@container fixed right-0 bottom-0 left-0 z-10 px-6" />
   </div>
 </template>

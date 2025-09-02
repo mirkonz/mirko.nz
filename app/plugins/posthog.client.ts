@@ -8,7 +8,8 @@ export default defineNuxtPlugin((nuxtApp) => {
     api_host: runtimeConfig.public.posthogHost,
     capture_pageview: 'history_change',
     loaded: (posthog) => {
-      if (import.meta.env.MODE === 'development') posthog.debug()
+      if (import.meta.env.MODE === 'development')
+        posthog.debug()
     },
   })
 

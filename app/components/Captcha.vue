@@ -1,13 +1,11 @@
-<template>
-  <div ref="wrap" class="relative w-full h-full">
-    <canvas ref="canvas" class="block w-full h-full" @mousedown="onMouseDown" @mousemove="onMouseMove" />
-  </div>
-</template>
-
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
-type Pt = { x: number; y: number }
+interface Pt { x: number, y: number }
+const props = withDefaults(defineProps<{ dotSize?: number }>(), { dotSize: 12 })
+
+const emit = defineEmits<{ (e: 'completed'): void, (e: 'reset'): void }>()
+
 class Dot {
   x: number
   y: number
@@ -15,13 +13,11 @@ class Dot {
     this.x = x
     this.y = y
   }
+
   within(px: number, py: number, r: number) {
     return Math.hypot(px - this.x, py - this.y) < r
   }
 }
-
-const emit = defineEmits<{ (e: 'completed'): void; (e: 'reset'): void }>()
-const props = withDefaults(defineProps<{ dotSize?: number }>(), { dotSize: 12 })
 
 const wrap = ref<HTMLDivElement | null>(null)
 const canvas = ref<HTMLCanvasElement | null>(null)
@@ -48,7 +44,7 @@ const guidePointsNorm: Pt[] = [
 ]
 
 function scalePoints(points: Pt[], w: number, h: number): Pt[] {
-  return points.map((p) => ({ x: p.x * w, y: p.y * h }))
+  return points.map(p => ({ x: p.x * w, y: p.y * h }))
 }
 
 let cssW = 0
@@ -63,7 +59,8 @@ let currentPos: Pt = { x: 0, y: 0 }
 function resizeCanvasToParent() {
   const el = wrap.value
   const c = canvas.value
-  if (!el || !c) return
+  if (!el || !c)
+    return
   const dpr = Math.max(1, window.devicePixelRatio || 1)
   cssW = el.clientWidth
   cssH = el.clientHeight
@@ -72,9 +69,10 @@ function resizeCanvasToParent() {
   c.width = Math.round(cssW * dpr)
   c.height = Math.round(cssH * dpr)
   ctx = c.getContext('2d')
-  if (ctx) ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+  if (ctx)
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
   const scaled = scalePoints(guidePointsNorm, cssW, cssH)
-  guideDots = scaled.map((p) => new Dot(p.x, p.y))
+  guideDots = scaled.map(p => new Dot(p.x, p.y))
   if (dots.length === 0) {
     lastPos = { ...guideDots[0] }
     currentPos = { ...guideDots[0] }
@@ -91,7 +89,8 @@ function init() {
 }
 
 function draw() {
-  if (!ctx) return
+  if (!ctx)
+    return
   ctx.clearRect(0, 0, cssW, cssH)
 
   const root = document.documentElement
@@ -107,7 +106,7 @@ function draw() {
     const d = dots[i]
     if (i > 0) {
       ctx.strokeStyle = lineColor
-      ctx.lineWidth = 2
+      ctx.lineWidth = 1
       ctx.beginPath()
       ctx.moveTo(d.x, d.y)
       ctx.lineTo(dots[i - 1].x, dots[i - 1].y)
@@ -116,7 +115,8 @@ function draw() {
   }
 
   for (let i = 0; i < guideDots.length; i++) {
-    if (!drawingCompleted && i === currentIndex) continue
+    if (!drawingCompleted && i === currentIndex)
+      continue
     const g = guideDots[i]
     ctx.fillStyle = guideDotFill
     ctx.beginPath()
@@ -126,7 +126,7 @@ function draw() {
 
   if (!drawingCompleted && currentIndex > 0) {
     ctx.strokeStyle = colorPrimary
-    ctx.lineWidth = 2
+    ctx.lineWidth = 1
     ctx.beginPath()
     ctx.moveTo(lastPos.x, lastPos.y)
     ctx.lineTo(currentPos.x, currentPos.y)
@@ -143,7 +143,7 @@ function draw() {
 
   if (drawingCompleted && dots.length > 1) {
     ctx.strokeStyle = lineColor
-    ctx.lineWidth = 2
+    ctx.lineWidth = 1
     ctx.beginPath()
     ctx.moveTo(dots[0].x, dots[0].y)
     for (let i = 1; i < dots.length; i++) ctx.lineTo(dots[i].x, dots[i].y)
@@ -155,7 +155,8 @@ function draw() {
 
 function toCanvasCoords(e: MouseEvent) {
   const cv = canvas.value
-  if (!cv) return { x: 0, y: 0 }
+  if (!cv)
+    return { x: 0, y: 0 }
   const rect = cv.getBoundingClientRect()
   const scaleX = cv.width / rect.width
   const scaleY = cv.height / rect.height
@@ -194,12 +195,25 @@ defineExpose({ reset })
 
 onMounted(() => {
   ro = new ResizeObserver(resizeCanvasToParent)
-  if (wrap.value) ro.observe(wrap.value)
+  if (wrap.value)
+    ro.observe(wrap.value)
   init()
   raf = requestAnimationFrame(draw)
 })
 onBeforeUnmount(() => {
   cancelAnimationFrame(raf)
-  if (ro) ro.disconnect()
+  if (ro)
+    ro.disconnect()
 })
 </script>
+
+<template>
+  <div ref="wrap" class="relative h-full w-full">
+    <canvas
+      ref="canvas"
+      class="block h-full w-full"
+      @mousedown="onMouseDown"
+      @mousemove="onMouseMove"
+    />
+  </div>
+</template>

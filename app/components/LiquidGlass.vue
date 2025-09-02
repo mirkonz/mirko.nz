@@ -1,30 +1,5 @@
-<template>
-  <span
-    class="inline-block relative isolate overflow-hidden bg-transparent"
-    v-bind="$attrs"
-    ref="root"
-    :style="{
-      '--lg-blur': `${blur}px`,
-      '--lg-bright': String(brightness),
-      '--lg-sat': String(saturate),
-    }"
-  >
-    <!-- Effect -->
-    <span
-      class="lg-effect absolute inset-0 z-0 bg-[rgba(255,255,255,0.001)] pointer-events-none"
-      :style="ready ? { filter: `url(#${filterId})` } : null"
-    ></span>
-    <!-- Tint -->
-    <span class="absolute inset-0 z-10 pointer-events-none" :style="{ background: tint }"></span>
-    <!-- Shine -->
-    <span class="absolute inset-0 z-20 pointer-events-none shadow-inner"></span>
-    <!-- Text -->
-    <span class="relative z-30 whitespace-nowrap"><slot /></span>
-  </span>
-</template>
-
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 const props = withDefaults(
   defineProps<{
@@ -88,7 +63,8 @@ const fw = computed(() => w.value + overscanPx.value * 2)
 const fh = computed(() => h.value + overscanPx.value * 2)
 
 function ensureDefsHost(): SVGDefsElement | null {
-  if (typeof window === 'undefined') return null
+  if (typeof window === 'undefined')
+    return null
   let host = document.getElementById('lg-defs-host') as unknown as SVGSVGElement | null
   if (!host) {
     const ns = 'http://www.w3.org/2000/svg'
@@ -107,7 +83,8 @@ function ensureDefsHost(): SVGDefsElement | null {
 }
 
 function createFilter() {
-  if (!defs) return
+  if (!defs)
+    return
   const ns = 'http://www.w3.org/2000/svg'
   filterEl = document.createElementNS(ns, 'filter')
   feImageEl = document.createElementNS(ns, 'feImage') as unknown as SVGFEImageElement
@@ -132,7 +109,8 @@ function createFilter() {
 }
 
 function updateFilterFrame() {
-  if (!filterEl || !feImageEl || !feDispEl) return
+  if (!filterEl || !feImageEl || !feDispEl)
+    return
   filterEl.setAttribute('x', String(fx.value))
   filterEl.setAttribute('y', String(fy.value))
   filterEl.setAttribute('width', String(fw.value))
@@ -149,17 +127,20 @@ function updateFilterFrame() {
 }
 
 function sizeCanvas() {
-  if (!canvas) return
+  if (!canvas)
+    return
   const d = Math.max(0.5, props.canvasDpi)
   canvas.width = Math.max(1, Math.round(fw.value * d))
   canvas.height = Math.max(1, Math.round(fh.value * d))
 }
 
 function renderMap() {
-  if (!canvas) return
+  if (!canvas)
+    return
   if (!ctx) {
     const c = canvas.getContext('2d')
-    if (!c) return
+    if (!c)
+      return
     ctx = c
   }
   const cw = canvas.width
@@ -201,15 +182,16 @@ function measureLayoutSize(el: HTMLElement) {
     const b = entry.borderBoxSize[0]
     w.value = Math.max(1, Math.round(b.inlineSize))
     h.value = Math.max(1, Math.round(b.blockSize))
-  } else {
+  }
+  else {
     w.value = Math.max(1, el.offsetWidth)
     h.value = Math.max(1, el.offsetHeight)
   }
 }
 
 onMounted(() => {
-  filterId.value =
-    typeof crypto !== 'undefined' && 'randomUUID' in crypto
+  filterId.value
+    = typeof crypto !== 'undefined' && 'randomUUID' in crypto
       ? `lg-${crypto.randomUUID()}`
       : `lg-${Math.random().toString(36).slice(2)}`
   defs = ensureDefsHost()
@@ -234,11 +216,13 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  if (ro && root.value) ro.unobserve(root.value)
+  if (ro && root.value)
+    ro.unobserve(root.value)
   ro = null
   ctx = null
   canvas = null
-  if (filterEl && defs) defs.removeChild(filterEl)
+  if (filterEl && defs)
+    defs.removeChild(filterEl)
   filterEl = null
   feImageEl = null
   feDispEl = null
@@ -257,6 +241,31 @@ watch(
   () => snapshot(),
 )
 </script>
+
+<template>
+  <span
+    v-bind="$attrs"
+    ref="root"
+    class="relative isolate inline-block overflow-hidden bg-transparent"
+    :style="{
+      '--lg-blur': `${blur}px`,
+      '--lg-bright': String(brightness),
+      '--lg-sat': String(saturate),
+    }"
+  >
+    <!-- Effect -->
+    <span
+      class="lg-effect pointer-events-none absolute inset-0 z-0 bg-[rgba(255,255,255,0.001)]"
+      :style="ready ? { filter: `url(#${filterId})` } : null"
+    />
+    <!-- Tint -->
+    <span class="pointer-events-none absolute inset-0 z-10" :style="{ background: tint }" />
+    <!-- Shine -->
+    <span class="pointer-events-none absolute inset-0 z-20 shadow-inner" />
+    <!-- Text -->
+    <span class="relative z-30 whitespace-nowrap"><slot /></span>
+  </span>
+</template>
 
 <style scoped>
 .lg-effect {

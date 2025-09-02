@@ -1,15 +1,6 @@
-<template>
-  <p class="word-hover-wrapper">
-    <template v-for="(n, i) in rendered" :key="i">
-      <component v-if="isVNodeItem(n)" :is="n" />
-      <template v-else>{{ n }}</template>
-    </template>
-  </p>
-</template>
-
 <script setup lang="ts">
-import { computed, h, useSlots, cloneVNode, isVNode, Text } from 'vue'
 import type { VNode } from 'vue'
+import { cloneVNode, computed, h, isVNode, Text, useSlots } from 'vue'
 
 const slots = useSlots()
 const staggerDelay = 50
@@ -39,7 +30,8 @@ function splitTextPreservingNBSP(s: string) {
     }
     buf += ch
   }
-  if (buf) parts.push(buf)
+  if (buf)
+    parts.push(buf)
   return parts
 }
 
@@ -52,12 +44,14 @@ function renderNodes(nodes: VNode[]) {
       for (const part of splitTextPreservingNBSP(n.children)) {
         if (/^\s+$/.test(part)) {
           out.push(part)
-        } else {
+        }
+        else {
           out.push(h('span', { class: animClass, style: { animationDelay: `${idx * staggerDelay}ms` } }, part))
           idx++
         }
       }
-    } else if (isVNode(n)) {
+    }
+    else if (isVNode(n)) {
       out.push(
         cloneVNode(n, {
           class: [n.props?.class, animClass],
@@ -73,6 +67,17 @@ function renderNodes(nodes: VNode[]) {
 const rendered = computed(() => renderNodes(slots.default?.() ?? []))
 const isVNodeItem = (n: unknown): n is VNode => isVNode(n)
 </script>
+
+<template>
+  <p class="word-hover-wrapper">
+    <template v-for="(n, i) in rendered" :key="i">
+      <component :is="n" v-if="isVNodeItem(n)" />
+      <template v-else>
+        {{ n }}
+      </template>
+    </template>
+  </p>
+</template>
 
 <style>
 @keyframes wh-fade-up {

@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-[90vh] md:min-h-[75vh] relative flex flex-col items-center justify-center">
+  <div class="relative flex min-h-[90vh] flex-col items-center justify-center md:min-h-[75vh]">
     <slot />
   </div>
 </template>

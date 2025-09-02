@@ -1,17 +1,3 @@
-<template>
-  <div class="scroll-indicator flex flex-col gap-0">
-    <div class="inline-block w-4 h-4 animate-bounce">
-      <svg viewBox="0 0 24 24" class="fill-current text-primary">
-        <path
-          fill="currentColor"
-          d="M16.59,5.59L18,7L12,13L6,7L7.41,5.59L12,10.17L16.59,5.59M16.59,11.59L18,13L12,19L6,13L7.41,11.59L12,16.17L16.59,11.59Z"
-        ></path>
-      </svg>
-    </div>
-    <div class="uppercase tracking-wide text-xs opacity-50">{{ $t('scroll') }}</div>
-  </div>
-</template>
-
 <script lang="ts" setup>
 import { onMounted } from 'vue'
 
@@ -20,12 +6,14 @@ onMounted(() => {
 
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v))
   const setState = (el, opacity, active) => {
-    if (!el) return
+    if (!el)
+      return
     el.style.opacity = String(opacity)
     if (active) {
       el.classList.add('is-active')
       el.ariaHidden = 'false'
-    } else {
+    }
+    else {
       el.classList.remove('is-active')
       el.ariaHidden = 'true'
     }
@@ -47,6 +35,22 @@ onMounted(() => {
   addEventListener('resize', update)
 })
 </script>
+
+<template>
+  <div class="scroll-indicator flex flex-col gap-0">
+    <div class="inline-block h-4 w-4 animate-bounce">
+      <svg viewBox="0 0 24 24" class="text-primary fill-current">
+        <path
+          fill="currentColor"
+          d="M16.59,5.59L18,7L12,13L6,7L7.41,5.59L12,10.17L16.59,5.59M16.59,11.59L18,13L12,19L6,13L7.41,11.59L12,16.17L16.59,11.59Z"
+        />
+      </svg>
+    </div>
+    <div class="text-xs tracking-wide uppercase opacity-50">
+      {{ $t('scroll') }}
+    </div>
+  </div>
+</template>
 
 <style>
 .scroll-indicator {

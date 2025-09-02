@@ -1,9 +1,6 @@
-<template>
-  <div class="blob" aria-hidden="true"></div>
-</template>
-
 <script lang="ts" setup>
 import { onMounted } from 'vue'
+
 onMounted(() => {
   const cfg = {
     followLerp: 0.18,
@@ -82,7 +79,7 @@ onMounted(() => {
   })
 
   const lerp = (a, b, t) => a + (b - a) * t
-  const ease = (t) => t * (2 - t)
+  const ease = t => t * (2 - t)
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v))
 
   function frame(t) {
@@ -96,7 +93,8 @@ onMounted(() => {
     if (t < tweenEnd) {
       const p = clamp((t - tweenStart) / (tweenEnd - tweenStart), 0, 1)
       hue = lerp(tweenStartHue, hueBase, ease(p)) % 360
-    } else {
+    }
+    else {
       hue = hueBase % 360
     }
 
@@ -146,6 +144,10 @@ onMounted(() => {
   requestAnimationFrame(frame)
 })
 </script>
+
+<template>
+  <div class="blob" aria-hidden="true" />
+</template>
 
 <style>
 :root {

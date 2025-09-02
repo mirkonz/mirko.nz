@@ -37,8 +37,7 @@
   "contact.validation.name_min": "Bitte gib mindestens 2 Zeichen ein",
   "contact.validation.email": "Bitte gib eine gültige E-Mail ein",
   "contact.validation.message_min": "Bitte gib mindestens 10 Zeichen ein",
-  "contact.thanks": "Danke, {name}!"
-  ,
+  "contact.thanks": "Danke, {name}!",
   "captcha.title": "Verbinde die Punkte!",
   "cancel": "Abbrechen"
 }

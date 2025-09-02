@@ -1,3 +1,4 @@
+import process from 'node:process'
 import tailwindcss from '@tailwindcss/vite'
 import { defineNuxtConfig } from 'nuxt/config'
 import svgLoader from 'vite-svg-loader'
@@ -61,7 +62,7 @@ export default defineNuxtConfig({
     preset: 'netlify-static',
     prerender: {
       crawlLinks: true,
-      routes: ['/' /* add any dynamic paths you must include */],
+      routes: ['/'],
     },
   },
   pwa: {

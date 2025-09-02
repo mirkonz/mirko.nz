@@ -1,20 +1,3 @@
-<template>
-  <ClientOnly>
-    <dialog ref="el" class="fixed rounded-xl  m-0 p-0 bg-transparent outline-none dark:text-white backdrop:bg-transparent backdrop:pointer-events-auto">
-      <div class="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-        <div class="relative rounded-xl p-6 w-[28rem] max-w-[80vw] max-h-[calc(100vh-2rem)] overflow-auto transition duration-200 ease-out" :class="entered ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-2'">
-          <button type="button" class="absolute right-3 top-3 p-1 w-6 h-6 rounded-full focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-primary leading-0" @click="close" :aria-label="$t('cancel')">
-            ✕
-          </button>
-          <slot />
-        </div>
-      </div>
-      <ThemeToggle class="fixed z-50 top-6 left-1/2 transform -translate-x-1/2 sm:left-8" />
-      <Footer class="@container px-6 fixed z-50 bottom-0 left-0 right-0" />
-    </dialog>
-  </ClientOnly>
-</template>
-
 <script setup lang="ts">
 const props = defineProps<{ open: boolean }>()
 const emit = defineEmits<(e: 'update:open', v: boolean) => void>()
@@ -22,14 +5,16 @@ const el = ref<HTMLDialogElement | null>(null)
 const entered = ref(false)
 
 function open() {
-  if (!el.value || el.value.open) return
+  if (!el.value || el.value.open)
+    return
   el.value.showModal()
   requestAnimationFrame(() => {
     entered.value = true
   })
 }
 function close() {
-  if (!el.value?.open) return
+  if (!el.value?.open)
+    return
   entered.value = false
   setTimeout(() => {
     el.value?.close()
@@ -38,7 +23,8 @@ function close() {
 }
 
 onMounted(() => {
-  if (props.open) open()
+  if (props.open)
+    open()
   el.value?.addEventListener('cancel', (e) => {
     e.preventDefault()
     close()
@@ -52,7 +38,26 @@ watch(
   },
   { flush: 'post' },
 )
-function onBackdrop(e: MouseEvent) {
-  if (e.target === el.value) close()
-}
 </script>
+
+<template>
+  <ClientOnly>
+    <dialog ref="el" class="fixed m-0  rounded-xl bg-transparent p-0 outline-none backdrop:pointer-events-auto backdrop:bg-transparent dark:text-white">
+      <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div class="relative max-h-[calc(100vh-2rem)] w-[28rem] max-w-[80vw] overflow-auto rounded-xl p-6 transition duration-200 ease-out" :class="entered ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-2'">
+          <button
+            type="button"
+            class="focus-within:outline-primary absolute top-3 right-3 h-6 w-6 cursor-pointer rounded-full p-1 leading-0 focus-within:outline-2 focus-within:outline-offset-2"
+            :aria-label="$t('cancel')"
+            @click="close"
+          >
+            ✕
+          </button>
+          <slot />
+        </div>
+      </div>
+      <ThemeToggle class="fixed top-6 left-1/2 z-50 -translate-x-1/2 transform sm:left-8" />
+      <Footer class="@container fixed right-0 bottom-0 left-0 z-50 px-6" />
+    </dialog>
+  </ClientOnly>
+</template>
