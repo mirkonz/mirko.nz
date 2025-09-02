@@ -7,14 +7,12 @@ export default defineNuxtConfig({
   components: true,
   runtimeConfig: {
     resend: {
-      apiKey: process.env.NUXT_RESEND_API_KEY,
+      apiKey: '',
     },
-    contactTo: process.env.CONTACT_TO,
-    contactFrom: process.env.CONTACT_FROM,
-    netlifyBlobsSiteId:
-      process.env.NETLIFY_SITE_ID,
-    netlifyBlobsToken:
-      process.env.NETLIFY_AUTH_TOKEN,
+    contactTo: '',
+    contactFrom: '',
+    netlifyBlobsSiteId: '',
+    netlifyBlobsToken: '',
     public: {
       url:
         process.env.NODE_ENV === 'production'
@@ -69,10 +67,12 @@ export default defineNuxtConfig({
   },
   nitro: {
     preset: 'netlify',
-    prerender: {
-      crawlLinks: true,
-      routes: ['/'],
-    },
+    // Important: Do not prerender pages in SSR (nuxt-csurf needs per-request DOM)
+    // prerender disabled to ensure CSRF cookie/token are generated on each request
+  },
+  csurf: {
+    // Ensure token is available in SSR context for any server-side fetches
+    addCsrfTokenToEventCtx: true,
   },
   pwa: {
     manifest: {

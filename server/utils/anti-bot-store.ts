@@ -38,8 +38,8 @@ export function getAntiBotStore(): StoreLike {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const { getStore } = require('@netlify/blobs') as typeof import('@netlify/blobs')
     const cfg = useRuntimeConfig()
-    const siteID = cfg.netlifyBlobsSiteId
-    const token = cfg.netlifyBlobsToken
+    const siteID = cfg.netlifyBlobsSiteId || process.env.NETLIFY_SITE_ID
+    const token = cfg.netlifyBlobsToken || process.env.NETLIFY_AUTH_TOKEN
     const isNetlifyEnv = process.env.NETLIFY === 'true' || process.env.NETLIFY_DEV === 'true'
     const looksValidCreds = Boolean(siteID && token && !/your_site_id|your_personal_access_token/i.test(`${siteID}${token}`))
 

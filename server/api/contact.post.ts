@@ -101,15 +101,17 @@ export default defineEventHandler(async (event) => {
   const text = `You received a new message from your website contact form.\n\nName: ${name}\nEmail: ${email}\nIP: ${getRequestIP(event) || 'unknown'}\nUA: ${getUA(event)}\n\nMessage:\n${message}`
 
   try {
+    const contactFrom = (config.contactFrom as string) || process.env.CONTACT_FROM || ''
+    const contactTo = (config.contactTo as string) || process.env.CONTACT_TO || ''
     console.log('[contact] Sending email via Resend', {
-      from: config.contactFrom,
-      to: config.contactTo,
+      from: contactFrom,
+      to: contactTo,
       subject,
       reply_to: email,
     })
     const result: any = await resend.emails.send({
-      from: config.contactFrom,
-      to: config.contactTo,
+      from: contactFrom,
+      to: contactTo,
       subject,
       text,
       reply_to: email,
