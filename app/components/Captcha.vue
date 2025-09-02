@@ -397,7 +397,7 @@ defineExpose({ reset })
 onMounted(async () => {
   // Initialize captcha + server-side session tokens
   try {
-    const { data, error } = await useCsrfFetch<{ captchaToken: string; honeypotToken: string; issuedAt: number }>(
+    const { data, error } = await useCsrfFetch<{ captchaToken: string, honeypotToken: string, issuedAt: number }>(
       '/api/captcha/start',
       { method: 'GET' },
     )

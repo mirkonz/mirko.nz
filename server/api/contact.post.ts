@@ -1,8 +1,8 @@
 import type { H3Event } from 'h3'
-import { getAntiBotStore } from '../utils/anti-bot-store'
+import { useResend } from '#imports'
 import { createError, getRequestIP, readBody, setHeader } from 'h3'
 import { z } from 'zod'
-import { useResend } from '#imports'
+import { getAntiBotStore } from '../utils/anti-bot-store'
 
 function getUA(event: H3Event) {
   return (event.node.req.headers['user-agent'] as string) || 'unknown'
@@ -70,7 +70,7 @@ export default defineEventHandler(async (event) => {
     hasMessage: Boolean(body?.message),
     hasCaptchaToken: Boolean(body?.captchaToken),
     hasHoneypotToken: Boolean(body?.honeypotToken),
-    companyFilled: typeof body?.company === 'string' && body.company.trim() !== '' ? true : false,
+    companyFilled: !!(typeof body?.company === 'string' && body.company.trim() !== ''),
   })
   const parsed = ContactSchema.safeParse(body)
   if (!parsed.success)

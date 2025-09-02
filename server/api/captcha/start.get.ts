@@ -1,7 +1,7 @@
 import type { H3Event } from 'h3'
 import { randomUUID } from 'node:crypto'
-import { getAntiBotStore } from '../../utils/anti-bot-store'
 import { getRequestIP, setHeader } from 'h3'
+import { getAntiBotStore } from '../../utils/anti-bot-store'
 
 function getUA(event: H3Event) {
   return (event.node.req.headers['user-agent'] as string) || 'unknown'

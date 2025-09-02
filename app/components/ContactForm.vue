@@ -4,8 +4,8 @@ import { toTypedSchema } from '@vee-validate/zod'
 import { Field, Form } from 'vee-validate'
 import { computed, ref, watch } from 'vue'
 import { z } from 'zod'
-import { useSecurityStore } from '@/stores/security'
 import { useDialogStore } from '@/stores/dialog'
+import { useSecurityStore } from '@/stores/security'
 
 const { t, locale } = useI18n()
 

@@ -1,13 +1,13 @@
 type TTLSeconds = number
 
 interface StoreLike {
-  set(key: string, value: string, opts?: { ttl?: TTLSeconds; metadata?: any }): Promise<void>
-  get(key: string): Promise<string | null>
-  delete(key: string): Promise<void>
+  set: (key: string, value: string, opts?: { ttl?: TTLSeconds, metadata?: any }) => Promise<void>
+  get: (key: string) => Promise<string | null>
+  delete: (key: string) => Promise<void>
 }
 
 // Simple in-memory fallback with TTL for local/dev
-const mem = new Map<string, { value: string; expiresAt?: number }>()
+const mem = new Map<string, { value: string, expiresAt?: number }>()
 
 function memoryStore(): StoreLike {
   return {
