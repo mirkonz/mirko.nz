@@ -16,6 +16,12 @@ const dialogOpen = computed({
           <Particles class="pointer-events-none absolute -inset-11 h-[calc(100vh+5.5rem)] w-[calc(100vw+5.5rem)]" />
         </div>
 
+        <Confetti
+          class="fixed opacity-0 transition-opacity duration-1000"
+          :speed="1"
+          :colors="[[159, 255, 17], [34, 34, 34], [190, 190, 190]]"
+        />
+
         <ThemeToggle v-if="!dialogOpen" class="fixed top-6 left-1/2 z-50 -translate-x-1/2 transform sm:left-8" />
         <OpenForWork class="fixed top-8 right-8 z-50 h-24 w-24 drop-shadow-xl/25" />
 

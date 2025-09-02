@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { useSecurityStore } from '@/stores/security'
 
 interface Pt { x: number, y: number }
 
@@ -341,7 +342,27 @@ function reset() {
 }
 defineExpose({ reset })
 
-onMounted(() => {
+onMounted(async () => {
+  // Initialize captcha + server-side session tokens
+  try {
+    const { data, error } = await useCsrfFetch<{ captchaToken: string; honeypotToken: string; issuedAt: number }>(
+      '/api/captcha/start',
+      { method: 'GET' },
+    )
+    if (!error.value && data.value) {
+      console.debug('[captcha] start tokens', data.value)
+      const security = useSecurityStore()
+      security.setSession({
+        captchaToken: data.value.captchaToken,
+        honeypotToken: data.value.honeypotToken,
+        issuedAt: data.value.issuedAt,
+      })
+    }
+  }
+  catch (e) {
+    // best-effort; tokens will be required on submit anyway
+    console.error('[captcha] Failed to init captcha session', e)
+  }
   ro = new ResizeObserver(resizeCanvasToElement)
   if (canvas.value)
     ro.observe(canvas.value)

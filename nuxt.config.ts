@@ -6,6 +6,15 @@ import svgLoader from 'vite-svg-loader'
 export default defineNuxtConfig({
   components: true,
   runtimeConfig: {
+    resend: {
+      apiKey: process.env.NUXT_RESEND_API_KEY,
+    },
+    contactTo: process.env.CONTACT_TO,
+    contactFrom: process.env.CONTACT_FROM,
+    netlifyBlobsSiteId:
+      process.env.NETLIFY_SITE_ID,
+    netlifyBlobsToken:
+      process.env.NETLIFY_AUTH_TOKEN,
     public: {
       url:
         process.env.NODE_ENV === 'production'
@@ -54,12 +63,12 @@ export default defineNuxtConfig({
     // preference: 'dark',
   },
   plugins: [],
-  modules: ['@vite-pwa/nuxt', '@nuxtjs/color-mode', '@nuxtjs/google-fonts', '@nuxtjs/i18n', '@pinia/nuxt'],
+  modules: ['@vite-pwa/nuxt', '@nuxtjs/color-mode', '@nuxtjs/google-fonts', '@nuxtjs/i18n', '@pinia/nuxt', 'nuxt-csurf', 'nuxt-resend'],
   vite: {
     plugins: [tailwindcss(), svgLoader()],
   },
   nitro: {
-    preset: 'netlify-static',
+    preset: 'netlify',
     prerender: {
       crawlLinks: true,
       routes: ['/'],

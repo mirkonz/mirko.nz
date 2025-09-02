@@ -4,6 +4,7 @@ import { toTypedSchema } from '@vee-validate/zod'
 import { Field, Form } from 'vee-validate'
 import { computed, ref, watch } from 'vue'
 import { z } from 'zod'
+import { useSecurityStore } from '@/stores/security'
 
 const { t, locale } = useI18n()
 
@@ -26,13 +27,36 @@ watch(locale, () => {
   formRef.value?.validate()
 })
 
-async function onSubmit(values: { name: string, email: string, message: string }) {
-  await new Promise(r => setTimeout(r, 700))
-  console.warn(t('contact.thanks', { name: values.name }))
+const security = useSecurityStore()
+const company = ref('') // honeypot decoy
+
+async function onSubmit(values: { name: string, email: string, message: string, company?: string }) {
+  try {
+    const { $csrfFetch } = useNuxtApp()
+    const res = await $csrfFetch('/api/contact', {
+      method: 'POST',
+      body: {
+        name: values.name,
+        email: values.email,
+        message: values.message,
+        company: company.value ?? '',
+        captchaToken: security.captchaToken,
+        honeypotToken: security.honeypotToken,
+      },
+    })
+    console.debug('[contact] submit result', res)
+    console.warn(t('contact.thanks', { name: values.name }))
+    // Clear tokens after successful submit
+    security.clear()
+  }
+  catch (e: any) {
+    console.error('[contact] Failed to send message', e?.data || e?.message || e)
+    throw e
+  }
 }
 
 const baseInput
-  = 'w-full rounded-xl px-3 pt-6 pb-3 bg-black/10 dark:bg-white/20 text-black dark:text-white placeholder:opacity-0 outline-none ring-0 focus-visible:ring-2 focus-visible:ring-white focus:backdrop-blur-lg transition-all duration-500'
+  = 'w-full rounded-xl px-3 pt-6 pb-3 bg-black/10 dark:bg-white/1 text-black dark:text-white placeholder:opacity-0 outline-none ring-1 ring-black/10 dark:ring-white/10 focus-visible:ring-1 focus-visible:ring-black/30 dark:focus-visible:ring-white/30 backdrop-blur-lg transition-all duration-500'
 </script>
 
 <template>
@@ -58,8 +82,8 @@ const baseInput
             type="text"
             :class="[
               baseInput,
-              focus.name && m.valid && field.value ? 'ring-primary ring-2' : '',
-              m.touched && !m.valid ? 'ring-error ring-2' : '',
+              focus.name && m.valid && field.value ? 'ring-primary' : '',
+              m.touched && !m.valid ? '' : '',
             ]"
             @focus="focus.name = true"
             @blur="focus.name = false"
@@ -75,6 +99,17 @@ const baseInput
         </div>
       </Field>
 
+      <!-- Honeypot decoy (must stay empty) -->
+      <input
+        v-model="company"
+        name="company"
+        type="text"
+        autocomplete="off"
+        tabindex="-1"
+        aria-hidden="true"
+        style="display:none"
+      >
+
       <Field v-slot="{ field, meta: m, errors }" name="email">
         <div class="group relative">
           <label for="email" class="group-focus-within:text-primary pointer-events-none absolute top-2 left-3 z-10 text-xs opacity-70 transition">{{ $t('contact.fields.email') }}</label>
@@ -84,8 +119,8 @@ const baseInput
             type="email"
             :class="[
               baseInput,
-              focus.email && m.valid && field.value ? 'ring-primary ring-2' : '',
-              m.touched && !m.valid ? 'ring-error ring-2' : '',
+              focus.email && m.valid && field.value ? 'ring-primary' : '',
+              m.touched && !m.valid ? '' : '',
             ]"
             @focus="focus.email = true"
             @blur="focus.email = false"
@@ -110,8 +145,8 @@ const baseInput
             rows="3"
             :class="[
               `${baseInput} resize-y`,
-              focus.message && m.valid && field.value ? 'ring-primary ring-2' : '',
-              m.touched && !m.valid ? 'ring-error ring-2' : '',
+              focus.message && m.valid && field.value ? 'ring-primary' : '',
+              m.touched && !m.valid ? '' : '',
             ]"
             @focus="focus.message = true"
             @blur="focus.message = false"
