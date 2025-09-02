@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const props = defineProps<{ open: boolean }>()
 const emit = defineEmits<(e: 'update:open', v: boolean) => void>()
+const dialog = useDialogStore()
 const el = ref<HTMLDialogElement | null>(null)
 const entered = ref(false)
 
@@ -42,18 +43,24 @@ watch(
 
 <template>
   <ClientOnly>
-    <dialog ref="el" class="fixed m-0  rounded-xl bg-transparent p-0 outline-none backdrop:pointer-events-auto backdrop:bg-transparent dark:text-white">
+    <dialog ref="el" class="fixed m-0 rounded-xl bg-transparent p-0 outline-none backdrop:pointer-events-auto backdrop:bg-transparent dark:text-white">
+      <Captcha
+        v-if="dialog.activeDialog === 'captcha'"
+        class="fixed inset-0"
+        :dots-width="200"
+        :dots-height="200"
+        @completed="() => dialog.open('contact')"
+      />
       <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-        <div class="relative max-h-[calc(100vh-2rem)] w-[28rem] max-w-[80vw] overflow-auto rounded-xl p-6 transition duration-200 ease-out" :class="entered ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-2'">
-          <button
-            type="button"
-            class="focus-within:outline-primary absolute top-3 right-3 h-6 w-6 cursor-pointer rounded-full p-1 leading-0 focus-within:outline-2 focus-within:outline-offset-2"
-            :aria-label="$t('cancel')"
+        <div class="relative max-h-[calc(100vh-2rem)] w-[28rem] max-w-[80vw] overflow-auto rounded-xl p-1 transition duration-200 ease-out" :class="entered ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-2'">
+          <slot />
+          <Button
+            variant="normal"
+            :class="dialog.activeDialog === 'captcha' ? 'absolute bottom-32 left-1/2 -translate-x-1/2' : 'relative left-1/2 -translate-x-1/2 mt-4'"
             @click="close"
           >
-            ✕
-          </button>
-          <slot />
+            {{ $t('cancel') }}
+          </Button>
         </div>
       </div>
       <ThemeToggle class="fixed top-6 left-1/2 z-50 -translate-x-1/2 transform sm:left-8" />

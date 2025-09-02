@@ -36,7 +36,7 @@ const baseInput
 </script>
 
 <template>
-  <div>
+  <div class="mx-auto max-w-2xs">
     <h2 class="text-primary mb-4 text-center text-2xl">
       {{ $t('contact.title') }}
     </h2>

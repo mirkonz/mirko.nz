@@ -1,14 +1,10 @@
 <script setup lang="ts">
 const head = useLocaleHead()
-type ActiveDialog = 'captcha' | 'contact' | null
-const activeDialog = ref<ActiveDialog>(null)
-const isModalOpen = computed(() => activeDialog.value !== null)
+const dialog = useDialogStore()
+const isModalOpen = computed(() => dialog.isOpen)
 const dialogOpen = computed({
-  get: () => activeDialog.value !== null,
-  set: (v: boolean) => {
-    if (!v)
-      activeDialog.value = null
-  },
+  get: () => dialog.isOpen,
+  set: (v: boolean) => dialog.setOpen(v),
 })
 </script>
 
@@ -22,6 +18,8 @@ const dialogOpen = computed({
 
         <ThemeToggle v-if="!dialogOpen" class="fixed top-6 left-1/2 z-50 -translate-x-1/2 transform sm:left-8" />
         <OpenForWork class="fixed top-8 right-8 z-50 h-24 w-24 drop-shadow-xl/25" />
+
+        <Blob class="z-0" />
 
         <Transition
           mode="out-in"
@@ -47,7 +45,7 @@ const dialogOpen = computed({
           <Button
             v-if="!isModalOpen"
             class="fixed bottom-1/5 left-1/2 z-40 -translate-x-1/2 transform hover:scale-110 sm:bottom-48"
-            @click="activeDialog = 'captcha'"
+            @click="dialog.open('captcha')"
           >
             {{ $t('letsConnect') }}
           </Button>
@@ -55,18 +53,17 @@ const dialogOpen = computed({
 
         <Dialog v-model:open="dialogOpen" class="z-40">
           <Transition name="dialog-swap" mode="out-in">
-            <div :key="activeDialog">
-              <template v-if="activeDialog === 'captcha'">
-                <div class="flex flex-col items-center justify-center gap-2">
-                  <h3 class="text-primary text-2xl">
+            <div :key="dialog.activeDialog">
+              <template v-if="dialog.activeDialog === 'captcha'">
+                <!-- <div class="flex flex-col items-center justify-center gap-2 pb-96"> -->
+                <div class="h-[75vh] w-full">
+                  <h3 class="text-primary absolute top-1/5 left-1/2 -translate-x-1/2 text-2xl">
                     {{ $t('captcha.title') }}
                   </h3>
-                  <div class="my-4 h-64 w-64">
-                    <Captcha @completed="() => { activeDialog = 'contact' }" />
-                  </div>
                 </div>
+                <!-- </div> -->
               </template>
-              <template v-else-if="activeDialog === 'contact'">
+              <template v-else-if="dialog.activeDialog === 'contact'">
                 <ContactForm />
               </template>
             </div>

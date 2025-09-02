@@ -1,6 +1,5 @@
 <template>
   <main class="justify-center align-middle">
-    <Blob />
     <section class="flex flex-col items-center">
       <div class="relative max-w-prose">
         <h1 class="sr-only">

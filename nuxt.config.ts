@@ -54,7 +54,7 @@ export default defineNuxtConfig({
     // preference: 'dark',
   },
   plugins: [],
-  modules: ['@vite-pwa/nuxt', '@nuxtjs/color-mode', '@nuxtjs/google-fonts', '@nuxtjs/i18n'],
+  modules: ['@vite-pwa/nuxt', '@nuxtjs/color-mode', '@nuxtjs/google-fonts', '@nuxtjs/i18n', '@pinia/nuxt'],
   vite: {
     plugins: [tailwindcss(), svgLoader()],
   },

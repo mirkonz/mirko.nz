@@ -29,7 +29,7 @@ const iconMap = { github, codepen, linkedIn, xing }
       <a
         v-for="item in items"
         :key="item.id"
-        class="hover:text-primary transition hover:scale-110"
+        class="hover:text-primary focus:text-primary transition hover:scale-110 focus:outline-none"
         :href="item.url"
         target="_blank"
         :title="`${item.label} profile`"
