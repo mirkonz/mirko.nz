@@ -62,6 +62,21 @@ export default defineNuxtConfig({
   },
   plugins: [],
   modules: ['@vite-pwa/nuxt', '@nuxtjs/color-mode', '@nuxtjs/google-fonts', '@nuxtjs/i18n', '@pinia/nuxt', 'nuxt-csurf', 'nuxt-resend'],
+  routeRules: (() => {
+    const ingest = process.env.POSTHOG_INGEST || process.env.POSTHOG_HOST || 'https://us.i.posthog.com'
+    const isEU = /(^https?:\/\/)?eu\./i.test( ingest )
+    const assetsBase = isEU ? 'https://eu-assets.i.posthog.com' : 'https://us-assets.i.posthog.com'
+    return {
+      // PostHog assets (remote config, toolbar, etc.)
+      '/_i/static/**': { proxy: `${assetsBase}/static/**` },
+      '/_i/array/**': { proxy: `${assetsBase}/array/**` },
+      // PostHog ingest + API (events, flags, decide, engage, etc.)
+      '/_i/**': {
+        csurf: false,
+        proxy: `${ingest}/**`,
+      },
+    }
+  })(),
   vite: {
     plugins: [tailwindcss(), svgLoader()],
   },

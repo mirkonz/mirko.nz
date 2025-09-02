@@ -1,3 +1,24 @@
 [build]
 command = "pnpm build"
 publish = "dist"
+
+# Proxy PostHog through first-party path to avoid ad blockers.
+# If your PostHog project is in EU, change 'us' to 'eu' in the targets.
+
+[[redirects]]
+from = "/_i/static/*"
+to = "https://us-assets.i.posthog.com/static/:splat"
+status = 200
+force = true
+
+[[redirects]]
+from = "/_i/array/*"
+to = "https://us-assets.i.posthog.com/array/:splat"
+status = 200
+force = true
+
+[[redirects]]
+from = "/_i/*"
+to = "https://us.i.posthog.com/:splat"
+status = 200
+force = true
