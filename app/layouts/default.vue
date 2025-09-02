@@ -17,27 +17,32 @@ const dialogOpen = computed({
         </div>
 
         <Confetti
-          class="fixed opacity-0 transition-opacity duration-1000"
+          class="pointer-events-none fixed transition-opacity duration-1000"
+          :class="[dialog.confettiVisible ? 'opacity-100' : 'opacity-0']"
           :speed="1"
           :colors="[[159, 255, 17], [34, 34, 34], [190, 190, 190]]"
         />
 
-        <ThemeToggle v-if="!dialogOpen" class="fixed top-6 left-1/2 z-50 -translate-x-1/2 transform sm:left-8" />
+        <ThemeToggle v-if="!dialogOpen" class="fixed top-6 left-1/2 z-50 -translate-x-1/2 transform sm:left-10" />
         <OpenForWork class="fixed top-8 right-8 z-50 h-24 w-24 drop-shadow-xl/25" />
 
         <Blob class="z-0" />
 
-        <Transition
-          mode="out-in"
-          enter-active-class="transition-opacity duration-700"
-          enter-from-class="opacity-0"
-          enter-to-class="opacity-100"
-          leave-active-class="transition-opacity duration-300"
-          leave-from-class="opacity-100"
-          leave-to-class="opacity-0"
-        >
-          <NuxtPage v-if="!isModalOpen" class="@container relative z-20 flex flex-grow flex-col px-6" />
-        </Transition>
+        <NuxtPage v-slot="{ Component }">
+          <Transition
+            mode="out-in"
+            enter-active-class="transition-opacity duration-700"
+            enter-from-class="opacity-0"
+            enter-to-class="opacity-100"
+            leave-active-class="transition-opacity duration-300"
+            leave-from-class="opacity-100"
+            leave-to-class="opacity-0"
+          >
+            <div v-if="!isModalOpen" class="@container relative z-20 flex flex-grow flex-col px-6">
+              <component :is="Component" />
+            </div>
+          </Transition>
+        </NuxtPage>
 
         <Transition
           mode="out-in"
@@ -61,13 +66,11 @@ const dialogOpen = computed({
           <Transition name="dialog-swap" mode="out-in">
             <div :key="dialog.activeDialog">
               <template v-if="dialog.activeDialog === 'captcha'">
-                <!-- <div class="flex flex-col items-center justify-center gap-2 pb-96"> -->
                 <div class="h-[75vh] w-full">
-                  <h3 class="text-primary absolute top-1/5 left-1/2 -translate-x-1/2 text-2xl">
+                  <h3 class="text-primary absolute top-1/5 left-1/2 w-full -translate-x-1/2 text-center text-2xl">
                     {{ $t('captcha.title') }}
                   </h3>
                 </div>
-                <!-- </div> -->
               </template>
               <template v-else-if="dialog.activeDialog === 'contact'">
                 <ContactForm />

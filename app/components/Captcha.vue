@@ -75,6 +75,13 @@ let drawingCompleted = false
 let lastPosWorld: Pt = { x: 0, y: 0 }
 let currentPosWorld: Pt = { x: 0, y: 0 }
 
+// One-shot pulse animations for clicked dots (world-space)
+interface ClickPulse { x: number, y: number, start: number, duration: number }
+const clickPulses: ClickPulse[] = []
+function addClickPulseAtWorld(p: Pt, duration = 500) {
+  clickPulses.push({ x: p.x, y: p.y, start: performance.now(), duration })
+}
+
 function worldToCanvas(p: Pt): Pt {
   return { x: p.x * scale + offsetX, y: p.y * scale + offsetY }
 }
@@ -228,6 +235,49 @@ function draw() {
     ctx.fill()
   }
 
+  // Render click pulses (expand + fade)
+  if (clickPulses.length) {
+    const now = performance.now()
+    const survivors: ClickPulse[] = []
+    const colors = getThemeColors()
+    for (let i = 0; i < clickPulses.length; i++) {
+      const p = clickPulses[i]
+      const t = Math.min(1, (now - p.start) / p.duration) // 0..1
+      const base = dotSize.value
+      const rFill = base * (1 + 0.6 * t)
+      const rRing = base * (1.2 + 2.0 * t)
+      const aFill = 0.5 * (1 - t)
+      const aRing = 0.6 * (1 - t)
+
+      const pCanvas = worldToCanvas({ x: p.x, y: p.y })
+
+      // Fading filled dot
+      ctx.save()
+      ctx.globalAlpha = aFill
+      ctx.fillStyle = colors.primary
+      ctx.beginPath()
+      ctx.ellipse(pCanvas.x, pCanvas.y, rFill, rFill, 0, 0, Math.PI * 2)
+      ctx.fill()
+      ctx.restore()
+
+      // Expanding ring
+      ctx.save()
+      ctx.globalAlpha = aRing
+      ctx.strokeStyle = colors.primary
+      ctx.lineWidth = Math.max(1, base * 0.2)
+      ctx.beginPath()
+      ctx.ellipse(pCanvas.x, pCanvas.y, rRing, rRing, 0, 0, Math.PI * 2)
+      ctx.stroke()
+      ctx.restore()
+
+      if (t < 1)
+        survivors.push(p)
+    }
+    // Keep only unfinished pulses
+    clickPulses.length = 0
+    clickPulses.push(...survivors)
+  }
+
   if (drawingCompleted && drawnDotsWorld.length > 1) {
     ctx.strokeStyle = colors.line
     ctx.lineWidth = 1
@@ -268,6 +318,8 @@ function onMouseDown(e: MouseEvent) {
   currentPosWorld.y = myWorld
   const next = guideDotsWorld[currentIndex]
   if (!drawingCompleted && next && isWithinTarget(mxCanvas, myCanvas, next, dotSize.value)) {
+    // Trigger a one-shot pulse on click
+    addClickPulseAtWorld(next)
     drawnDotsWorld.push(new Dot(next.x, next.y))
     currentIndex++
     lastPosWorld = { x: next.x, y: next.y }

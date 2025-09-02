@@ -5,6 +5,7 @@ import { Field, Form } from 'vee-validate'
 import { computed, ref, watch } from 'vue'
 import { z } from 'zod'
 import { useSecurityStore } from '@/stores/security'
+import { useDialogStore } from '@/stores/dialog'
 
 const { t, locale } = useI18n()
 
@@ -28,6 +29,7 @@ watch(locale, () => {
 })
 
 const security = useSecurityStore()
+const dialog = useDialogStore()
 const company = ref('') // honeypot decoy
 
 async function onSubmit(values: { name: string, email: string, message: string, company?: string }) {
@@ -48,6 +50,9 @@ async function onSubmit(values: { name: string, email: string, message: string, 
     console.warn(t('contact.thanks', { name: values.name }))
     // Clear tokens after successful submit
     security.clear()
+    // Close dialog and show confetti for ~5s
+    dialog.close()
+    dialog.showConfetti(5000)
   }
   catch (e: any) {
     console.error('[contact] Failed to send message', e?.data || e?.message || e)
