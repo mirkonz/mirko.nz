@@ -23,7 +23,7 @@
     "check": "concurrently \"pnpm:lint\" \"pnpm:stylelint\""
   },
   "dependencies": {
-    "nuxt": "^4.0.3"
+    "nuxt": "^4.2.2"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^5.2.1",
