@@ -1,5 +1,4 @@
 import type { H3Event } from 'h3'
-import { useResend } from '#imports'
 import { createError, getRequestIP, readBody, setHeader } from 'h3'
 import { z } from 'zod'
 import { getAntiBotStore } from '../utils/anti-bot-store'
@@ -20,7 +19,7 @@ const ContactSchema = z.object({
 async function validateAntiBot(event: H3Event, captchaToken: string, honeypotToken: string) {
   const ip = getRequestIP(event) || 'unknown'
   const ua = getUA(event)
-  const store = getAntiBotStore()
+  const store = getAntiBotStore(event)
 
   // 1) Honeypot token must exist (and not be reused)
   const hpKey = `honeypot:${honeypotToken}`
@@ -64,14 +63,6 @@ export default defineEventHandler(async (event) => {
   setHeader(event, 'Cache-Control', 'no-store')
 
   const body = await readBody(event)
-  console.log('[contact] Incoming body', {
-    hasName: Boolean(body?.name),
-    hasEmail: Boolean(body?.email),
-    hasMessage: Boolean(body?.message),
-    hasCaptchaToken: Boolean(body?.captchaToken),
-    hasHoneypotToken: Boolean(body?.honeypotToken),
-    companyFilled: !!(typeof body?.company === 'string' && body.company.trim() !== ''),
-  })
   const parsed = ContactSchema.safeParse(body)
   if (!parsed.success)
     throw createError({ statusCode: 400, statusMessage: 'Invalid form data.', data: parsed.error.flatten?.() ?? parsed.error })
@@ -84,7 +75,6 @@ export default defineEventHandler(async (event) => {
 
   try {
     await validateAntiBot(event, captchaToken, honeypotToken)
-    console.log('[contact] Anti-bot validation passed')
   }
   catch (e) {
     console.error('[contact] Anti-bot validation failed', e)
@@ -95,33 +85,35 @@ export default defineEventHandler(async (event) => {
   if (!config.resend?.apiKey)
     throw createError({ statusCode: 500, statusMessage: 'Email service not configured.' })
 
-  const resend = useResend()
-
   const subject = `New contact from ${name}`
   const text = `You received a new message from your website contact form.\n\nName: ${name}\nEmail: ${email}\nIP: ${getRequestIP(event) || 'unknown'}\nUA: ${getUA(event)}\n\nMessage:\n${message}`
 
   try {
-    const contactFrom = (config.contactFrom as string) || process.env.CONTACT_FROM || ''
-    const contactTo = (config.contactTo as string) || process.env.CONTACT_TO || ''
-    console.log('[contact] Sending email via Resend', {
-      from: contactFrom,
-      to: contactTo,
-      subject,
-      reply_to: email,
+    const contactFrom = config.contactFrom as string
+    const contactTo = config.contactTo as string
+    if (!contactFrom || !contactTo)
+      throw createError({ statusCode: 500, statusMessage: 'Email service not configured.' })
+
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'authorization': `Bearer ${config.resend.apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: contactFrom,
+        to: [contactTo],
+        subject,
+        text,
+        reply_to: email,
+      }),
     })
-    const result: any = await resend.emails.send({
-      from: contactFrom,
-      to: contactTo,
-      subject,
-      text,
-      reply_to: email,
-    } as any)
-    if (result?.error) {
-      console.error('[contact] Resend send error', result.error)
+    const result = await response.json() as { id?: string, message?: string }
+    if (!response.ok) {
+      console.error('[contact] Resend send error', { status: response.status, message: result.message })
       throw createError({ statusCode: 502, statusMessage: 'Failed to send message.' })
     }
-    console.log('[contact] Resend send ok', { id: result?.data?.id })
-    return { ok: true, id: result?.data?.id }
+    return { ok: true, id: result.id }
   }
   catch (err: any) {
     // Avoid leaking details

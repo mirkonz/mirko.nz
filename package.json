@@ -10,10 +10,15 @@
     "type": "git",
     "url": "https://github.com/mayko780/mirko#readme"
   },
+  "engines": {
+    "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
+  },
   "scripts": {
     "dev": "nuxt dev --host",
     "build": "nuxt build",
     "start": "nuxt start",
+    "deploy": "pnpm run build && wrangler deploy",
+    "preview": "pnpm run build && wrangler dev",
     "generate": "nuxt generate",
     "generate-assets": "pwa-assets-generator --preset minimal-2023 public/logo.svg",
     "lint": "eslint .",
@@ -23,36 +28,37 @@
     "check": "concurrently \"pnpm:lint\" \"pnpm:stylelint\""
   },
   "dependencies": {
-    "nuxt": "^4.0.3"
+    "nuxt": "^4.6.4"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^5.2.1",
-    "@netlify/blobs": "^10.0.10",
-    "@nuxtjs/color-mode": "^3.5.2",
-    "@nuxtjs/google-fonts": "^3.2.0",
-    "@nuxtjs/i18n": "^10.0.6",
+    "@nuxt/fonts": "1.2.0",
+    "@nuxtjs/color-mode": "^4.1.0",
+    "@nuxtjs/i18n": "^10.6.0",
     "@nuxtjs/svg": "^0.4.1",
-    "@pinia/nuxt": "^0.11.2",
-    "@tailwindcss/vite": "^4.1.12",
+    "@pinia/nuxt": "^1.0.3",
+    "@tailwindcss/vite": "^4.3.5",
     "@vee-validate/zod": "^4.15.1",
-    "@vite-pwa/assets-generator": "^1.0.0",
-    "@vite-pwa/nuxt": "^1.0.4",
-    "@vue/compiler-sfc": "^3.5.20",
-    "concurrently": "^9.2.1",
-    "eslint": "^9.34.0",
-    "eslint-plugin-tailwindcss": "^4.0.0-beta.0",
-    "netlify-cli": "^23.4.0",
-    "nuxt-csurf": "^1.6.5",
-    "nuxt-resend": "^0.0.2",
-    "postcss-html": "^1.8.0",
-    "posthog-js": "^1.260.3",
-    "stylelint": "^16.23.1",
-    "stylelint-config-recommended-vue": "^1.6.1",
-    "tailwindcss": "^4.1.12",
-    "typescript": "^5.6.3",
+    "@vite-pwa/assets-generator": "^2.0.0",
+    "@vite-pwa/nuxt": "^2.0.1",
+    "@vue/compiler-sfc": "^3.5.45",
+    "concurrently": "^10.0.7",
+    "eslint": "^9.39.4",
+    "eslint-plugin-tailwindcss": "^4.4.0",
+    "nuxt-csurf": "^1.6.6",
+    "pinia": "4.1.0",
+    "postcss-html": "^2.0.0",
+    "posthog-js": "^1.449.1",
+    "stylelint": "^18.0.0",
+    "stylelint-config-html": "2.0.0",
+    "stylelint-config-recommended": "19.0.0",
+    "stylelint-config-recommended-vue": "^2.0.0",
+    "tailwindcss": "^4.3.5",
+    "typescript": "^6.0.3",
     "vee-validate": "^4.15.1",
-    "vite-svg-loader": "^5.1.0",
-    "vue": "^3.5.20",
-    "zod": "^3.24.76"
+    "vite-svg-loader": "^5.1.3",
+    "vue": "^3.5.45",
+    "wrangler": "4.162.0",
+    "zod": "^3.25.76"
   }
 }

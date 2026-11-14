@@ -35,7 +35,7 @@ const company = ref('') // honeypot decoy
 async function onSubmit(values: { name: string, email: string, message: string, company?: string }) {
   try {
     const { $csrfFetch } = useNuxtApp()
-    const res = await $csrfFetch('/api/contact', {
+    await $csrfFetch('/api/contact', {
       method: 'POST',
       body: {
         name: values.name,
@@ -46,8 +46,6 @@ async function onSubmit(values: { name: string, email: string, message: string, 
         honeypotToken: security.honeypotToken,
       },
     })
-    console.debug('[contact] submit result', res)
-    console.warn(t('contact.thanks', { name: values.name }))
     // Clear tokens after successful submit
     security.clear()
     // Close dialog and show confetti for ~5s
@@ -148,8 +146,9 @@ const baseInput
             v-bind="field"
             id="message"
             rows="3"
+            class="resize-y"
             :class="[
-              `${baseInput} resize-y`,
+              baseInput,
               focus.message && m.valid && field.value ? 'ring-primary' : '',
               m.touched && !m.valid ? '' : '',
             ]"

@@ -4,6 +4,5 @@ onlyBuiltDependencies:
   - better-sqlite3
   - core-js
   - esbuild
-  - netlify-cli
   - sharp
   - unix-dgram

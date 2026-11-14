@@ -11,8 +11,6 @@ export default defineNuxtConfig({
     },
     contactTo: '',
     contactFrom: '',
-    netlifyBlobsSiteId: '',
-    netlifyBlobsToken: '',
     public: {
       url:
         process.env.NODE_ENV === 'production'
@@ -40,14 +38,6 @@ export default defineNuxtConfig({
       script: [{ src: '/particles.min.js', defer: false }],
     },
   },
-  googleFonts: {
-    families: {
-      Raleway: {
-        wght: [300, 600, 700],
-      },
-    },
-    display: 'swap',
-  },
   i18n: {
     baseUrl: 'https://mirko.nz',
     defaultLocale: 'en',
@@ -61,10 +51,10 @@ export default defineNuxtConfig({
     // preference: 'dark',
   },
   plugins: [],
-  modules: ['@vite-pwa/nuxt', '@nuxtjs/color-mode', '@nuxtjs/google-fonts', '@nuxtjs/i18n', '@pinia/nuxt', 'nuxt-csurf', 'nuxt-resend'],
+  modules: ['@vite-pwa/nuxt', '@nuxt/fonts', '@nuxtjs/color-mode', '@nuxtjs/i18n', '@pinia/nuxt', 'nuxt-csurf'],
   routeRules: (() => {
     const ingest = process.env.POSTHOG_INGEST || process.env.POSTHOG_HOST || 'https://us.i.posthog.com'
-    const isEU = /(^https?:\/\/)?eu\./i.test( ingest )
+    const isEU = /(?:^https?:\/\/)?eu\./i.test(ingest)
     const assetsBase = isEU ? 'https://eu-assets.i.posthog.com' : 'https://us-assets.i.posthog.com'
     return {
       // PostHog assets (remote config, toolbar, etc.)
@@ -81,7 +71,7 @@ export default defineNuxtConfig({
     plugins: [tailwindcss(), svgLoader()],
   },
   nitro: {
-    preset: 'netlify',
+    preset: 'cloudflare_module',
     // Important: Do not prerender pages in SSR (nuxt-csurf needs per-request DOM)
     // prerender disabled to ensure CSRF cookie/token are generated on each request
   },
