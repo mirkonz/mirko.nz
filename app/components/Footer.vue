@@ -5,7 +5,7 @@ import linkedIn from '@/assets/icons/linkedIn.svg'
 import xing from '@/assets/icons/xing.svg'
 
 const items = [
-  { id: 'linkedIn', label: 'LinkedIn', url: 'https://www.linkedin.com/in/mirkonz/' },
+  { id: 'linkedIn', label: 'LinkedIn', url: 'https://www.linkedin.com/in/mirkomay/' },
   { id: 'github', label: 'GitHub', url: 'https://github.com/mirkonz' },
   { id: 'codepen', label: 'CodePen', url: 'https://codepen.io/mirkonz' },
   { id: 'xing', label: 'Xing', url: 'http://www.xing.com/profile/Mirko_May2' },
