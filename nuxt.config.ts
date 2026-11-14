@@ -48,7 +48,7 @@ export default defineNuxtConfig({
   },
   css: ['@/assets/css/main.css'],
   colorMode: {
-    // preference: 'dark',
+    classSuffix: '-mode',
   },
   plugins: [],
   modules: ['@vite-pwa/nuxt', '@nuxt/fonts', '@nuxtjs/color-mode', '@nuxtjs/i18n', '@pinia/nuxt', 'nuxt-csurf'],

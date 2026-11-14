@@ -1,22 +1,22 @@
 {
-	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "mirko-nz",
-	"main": "./.output/server/index.mjs",
-	"assets": {
-		"directory": "./.output/public/",
-		"binding": "ASSETS"
-	},
-	"compatibility_date": "2025-08-19",
-	"compatibility_flags": [
-		"nodejs_compat"
-	],
-	"observability": {
-		"enabled": true
-	},
-	"kv_namespaces": [
-		{
-			"binding": "FORM_ANTI_BOT",
-			"id": "ba7459d3fa9a44238d22958130769728"
-		}
-	]
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mirko-nz",
+  "main": "./.output/server/index.mjs",
+  "assets": {
+    "directory": "./.output/public/",
+    "binding": "ASSETS"
+  },
+  "compatibility_date": "2025-08-19",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "observability": {
+    "enabled": true
+  },
+  "kv_namespaces": [
+    {
+      "binding": "FORM_ANTI_BOT",
+      "id": "ba7459d3fa9a44238d22958130769728"
+    }
+  ]
 }
