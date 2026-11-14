@@ -18,5 +18,12 @@
       "binding": "FORM_ANTI_BOT",
       "id": "ba7459d3fa9a44238d22958130769728"
     }
-  ]
+  ],
+  "vars": {
+    "CONTACT_FROM": "noreply@mirko.nz",
+    "CONTACT_TO": "mayko780@gmail.com",
+    "POSTHOG_DEFAULTS": "2025-05-24",
+    "POSTHOG_HOST": "https://us.i.posthog.com",
+    "POSTHOG_PUBLIC_KEY": "phc_ns5t7aB6NWmb5TH64SE1YcqDI0WiFp8UkERQp67i0Ib"
+  }
 }
