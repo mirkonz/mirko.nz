@@ -1,5 +1,4 @@
 import type { H3Event } from 'h3'
-import { randomUUID } from 'node:crypto'
 import { getRequestIP, setHeader } from 'h3'
 import { getAntiBotStore } from '../../utils/anti-bot-store'
 
@@ -14,11 +13,11 @@ export default defineEventHandler(async (event) => {
   const ip = getRequestIP(event) || 'unknown'
   const ua = getUA(event)
 
-  const captchaToken = randomUUID()
-  const honeypotToken = randomUUID()
+  const captchaToken = crypto.randomUUID()
+  const honeypotToken = crypto.randomUUID()
   const issuedAt = Date.now()
 
-  const store = getAntiBotStore()
+  const store = getAntiBotStore(event)
 
   // Short-lived records: 10 minutes TTL
   const ttlSeconds = 10 * 60
@@ -27,7 +26,5 @@ export default defineEventHandler(async (event) => {
     store.set(`captcha:${captchaToken}`, JSON.stringify({ issuedAt, ip, ua }), { ttl: ttlSeconds }),
     store.set(`honeypot:${honeypotToken}`, JSON.stringify({ issuedAt, ip, ua }), { ttl: ttlSeconds }),
   ])
-  console.log('[captcha:start] Issued tokens', { captchaToken, honeypotToken, issuedAt, ip, ua })
-
   return { captchaToken, honeypotToken, issuedAt }
 })

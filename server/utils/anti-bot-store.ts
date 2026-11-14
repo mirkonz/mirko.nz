@@ -1,3 +1,5 @@
+import type { H3Event } from 'h3'
+
 type TTLSeconds = number
 
 interface StoreLike {
@@ -32,45 +34,30 @@ function memoryStore(): StoreLike {
   }
 }
 
-export function getAntiBotStore(): StoreLike {
-  try {
-    // Lazy require to allow local/dev without Netlify context
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { getStore } = require('@netlify/blobs') as typeof import('@netlify/blobs')
-    const cfg = useRuntimeConfig()
-    const siteID = cfg.netlifyBlobsSiteId || process.env.NETLIFY_SITE_ID
-    const token = cfg.netlifyBlobsToken || process.env.NETLIFY_AUTH_TOKEN
-    const isNetlifyEnv = process.env.NETLIFY === 'true' || process.env.NETLIFY_DEV === 'true'
-    const looksValidCreds = Boolean(siteID && token && !/your_site_id|your_personal_access_token/i.test(`${siteID}${token}`))
+interface KVNamespaceLike {
+  put: (key: string, value: string, options?: { expirationTtl?: number }) => Promise<void>
+  get: (key: string) => Promise<string | null>
+  delete: (key: string) => Promise<void>
+}
 
-    // Only use Netlify Blobs when running under Netlify env or explicit valid creds
-    if (!isNetlifyEnv && !looksValidCreds) {
-      return memoryStore()
-    }
-
-    const netlifyStore = getStore({
-      name: 'form-anti-bot',
-      consistency: 'strong',
-      ...(looksValidCreds ? { siteID, token } : {}),
-    } as any)
-
-    // Wrap to normalize API we use
-    const wrapper: StoreLike = {
-      async set(key, value, opts) {
-        await netlifyStore.set(key as any, value, { ttl: opts?.ttl } as any)
-      },
-      async get(key) {
-        const v = await netlifyStore.get(key, { type: 'text' } as any)
-        return (v as any) ?? null
-      },
-      async delete(key) {
-        await netlifyStore.delete(key as any)
-      },
-    }
-    return wrapper
+function cloudflareStore(namespace: KVNamespaceLike): StoreLike {
+  return {
+    async set(key, value, opts) {
+      await namespace.put(key, value, opts?.ttl ? { expirationTtl: opts.ttl } : undefined)
+    },
+    get: key => namespace.get(key),
+    delete: key => namespace.delete(key),
   }
-  catch (e) {
-    // Fallback for local dev without Netlify Blobs context
+}
+
+export function getAntiBotStore(event: H3Event): StoreLike {
+  const cloudflare = (event.context as { cloudflare?: { env?: { FORM_ANTI_BOT?: KVNamespaceLike } } }).cloudflare
+  const namespace = cloudflare?.env?.FORM_ANTI_BOT
+  if (namespace)
+    return cloudflareStore(namespace)
+
+  if (import.meta.dev)
     return memoryStore()
-  }
+
+  throw createError({ statusCode: 500, statusMessage: 'Anti-bot storage is not configured.' })
 }

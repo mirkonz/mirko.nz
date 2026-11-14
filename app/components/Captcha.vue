@@ -402,7 +402,6 @@ onMounted(async () => {
       { method: 'GET' },
     )
     if (!error.value && data.value) {
-      console.debug('[captcha] start tokens', data.value)
       const security = useSecurityStore()
       security.setSession({
         captchaToken: data.value.captchaToken,
